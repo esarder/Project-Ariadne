@@ -1,0 +1,4 @@
+exmaple:
+
+curl --url 'smtps://smtp.gmail.com:465' --ssl-reqd --mail-from 'project.ariadne2270@gmail.com' --mail-rcpt 'rhetthanscom@yahoo.com' --upload-file mail.txt --user 'project.ariadne2270@gmail.com:CSCI2270S19'
+
