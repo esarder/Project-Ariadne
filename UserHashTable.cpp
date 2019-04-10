@@ -71,7 +71,6 @@ void HashTable::addUser(string _username)
     string firstName, lastName, tempString;
     int tempPin;
 
-    // Need setter functions for first and last name (?)
 
     cout << "User" << endl;
     cout << "First name: " << endl;
