@@ -14,7 +14,6 @@ struct Event
   int index;
 };
 
-// Comment
 
 class User
 {
@@ -22,11 +21,11 @@ class User
     string username;
     string userFirstName;
     string userLastName;
-    int pin;
+    string pin;
     string EC_firstName;
     string EC_lastName;
     string EC_email;
-    Event* eventsArray[3];
+    Event* eventsArray;
 
   public:
     User();
@@ -35,14 +34,14 @@ class User
     string getUsername();
     string getUserFirstName();
     string getUserLastName();
-    int getPin();
+    string getPin();
     string getEC_firstName();
     string getEC_lastName();
     string getEC_email();
 
     void setUsername(string username);
     void setUser(string firstName, string lastName);
-    void setPin(int pin);
+    void setPin(string pin);
     void setEC_name(string firstName, string lastName);
     void setEC_email(string email);
 
