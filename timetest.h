@@ -35,9 +35,9 @@ public:
     tinder(int tableSize);
     ~tinder();
     void deleteUser(string _name);
-    void addMember(int _time, string name);
+    void addToHash(dater* d);
+    dater* addMember(int _time, string name);
     dater* searchUser(string name);
-    void activeCheck();
     void cancelAlert(string name);
     void print();
     int cs();
