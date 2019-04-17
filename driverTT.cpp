@@ -5,7 +5,7 @@
 #include <sstream>
 #include <fstream>
 //copy/paste for windows 10 compile--
-// g++ -std=c++11 -D _WIN32_WINNT=0x0A00 timetest.cpp driverTT.cpp
+// g++ -std=c++11 -D _WIN32_WINNT=0x0A00 -o timetest.o timetest.cpp driverTT.cpp
 
 using namespace std;
 
@@ -28,18 +28,18 @@ int main()
     int number; 
     string text;
     tinder newDate(10);
-    
-    
-    //test names
-    ///////////////////////////////
+    dater* addme;
+
+    // //test names
     fstream file;
     file.open("data.csv");
     string str;
     int p = 5;
     while(getline(file, str))
         {
-        newDate.addMember(p, str);
-        p = p+1;
+        addme = newDate.addMember(p, str);
+        newDate.addToHash(addme);
+        //p = p+2;
         }
     ////////////////////////////////
 
@@ -57,7 +57,9 @@ int main()
                 cout << "Enter name: " << endl;
                 cin.ignore();
                 getline(cin, text);
-                newDate.addMember(number, text);
+                //newDate.addMember(number, text);
+                addme = newDate.addMember(number, text);
+                newDate.addToHash(addme);
                 break;
             case 2: //print list of users
                 newDate.print();
@@ -74,12 +76,9 @@ int main()
             case 5: //quit
                 cout << "goodbye" << endl;
                 return 0;
-            case 6:
-                newDate.activeCheck();
             default:
                 break;
             }
         }
     return 0;
     }
- 
