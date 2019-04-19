@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include "UserHashTable.hpp"
+#include "hashTable.h"
+#include "User.h"
 
 using namespace std;
 
@@ -55,7 +56,7 @@ bool HashTable::isInTable(string _username)
 
 //-------->>>> addUser()
 
-void HashTable::addUser(string _username)
+void HashTable::addNewUser(string _username)
 {
 
   if(isInTable(_username)){
@@ -68,9 +69,7 @@ void HashTable::addUser(string _username)
     User* newUser = new User();
     newUser->setUsername(_username);
 
-    string firstName, lastName, tempString;
-    int tempPin;
-
+    string firstName, lastName, tempString, tempPin;
 
     cout << "User" << endl;
     cout << "First name: " << endl;
@@ -78,11 +77,6 @@ void HashTable::addUser(string _username)
     cout << "Last name: " << endl;
     cin >> lastName;
     newUser->setUser(firstName, lastName);
-
-    //newUser.setFirstName(tempString);
-    //newUser.setLastName(tempString);
-
-
 
     cout << endl << "Emergency Contact"<<endl;
     cout << "First name:" << endl;
@@ -104,7 +98,7 @@ void HashTable::addUser(string _username)
     int index = hash_func(newUser->getUsername());
     User* temp = userHashTable[index];
 
-    if(temp = 0){               // Hashed index is empty - user is first in this index of the hashTable
+    if(temp == 0){               // Hashed index is empty - user is first in this index of the hashTable
       newUser->next = 0;
       temp = newUser;
       userHashTable[index] = temp;
@@ -125,6 +119,41 @@ void HashTable::addUser(string _username)
     }
     numUsers++;
   }
+}
+
+void HashTable::addPreBuiltUser(User newUser)
+{
+  if(isInTable(newUser.getUsername())){
+    cout << "Username taken! Please enter another username" << endl;
+    // How can we have this code repeat to give user another opportunity to create username
+  }
+  else{
+    User* newUser = newUser;
+
+    // Adding new user to hashtable
+    int index = hash_func(newUser->getUsername());
+    User* temp = userHashTable[index];
+    if(temp == 0){               // Hashed index is empty - user is first in this index of the hashTable
+      newUser->next = 0;
+      temp = newUser;
+      userHashTable[index] = temp;
+    }
+    else{                      // User already exits in index of hashtable - must traverse linked list and save user at end
+      User* prev = userHashTable[index];
+
+      while(temp!=0){
+        prev = temp;
+        temp = temp->next;
+      }
+      if(temp == 0){
+        prev->next = newUser;
+        newUser->next = 0;
+        numCollisions++;
+      }
+    }
+    numUsers++;
+  }
+  return;
 }
 
 //-------->>>> deleteUser()
