@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
-#include "ariadne(modElla).hpp"
+#include <chrono>         // std::chrono::seconds
+#include <thread> //FOR MAC
+// #include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
+
+#include "User.h"
 
 using namespace std;
 
@@ -11,7 +15,9 @@ public:
 
   // Overload add user to start with multiple kinds of data? Do we only want to call it after we have all the user's information, or
   // let them add it later on?
-  void addUser(string _username);
+  void addNewUser(string _username);
+
+  void addPreBuiltUser(User newUser);
 
   void deleteUser(string _username);
 

@@ -5,7 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include <math.h>
-
+#include <cstdlib>
 //copy/paste for windows 10 compile--
 // g++ -std=c++11 -D _WIN32_WINNT=0x0A00 timetest.cpp driverTT.cpp
 
@@ -26,8 +26,7 @@ int hash_func(string username)
 
 /* n = how many seconds until the timer expires
 /  name = the name of the user
-/  &d = reference to vector of users in the class vector
-/  index = the index of the user in the vector at the time they were inserted
+/  d = user struct
 */
 
 void pause_thread(int n, string name , dater* d)
@@ -40,12 +39,22 @@ void pause_thread(int n, string name , dater* d)
     if(d->safe == false) //send out email
         {
         cout << "send email" << endl;
+        string compile = "a";
+        string firstName = d->name;
+        string lastName = "m";
+        string email = "jd@colorado.edu";
+        string s1 = compile+" "+firstName+" "+lastName+" "+email;
+
+        system("g++ email2nd.cpp"); //finds and compiles file
+        system(s1.c_str());//runs file with string variables
+
+        return;
         }
     else
         {
         cout << d->name << " is safe" << endl;
+        return;
         }
-    
     }
 
 tinder::tinder(int size)
@@ -62,17 +71,14 @@ tinder::~tinder()
     {
     
     }
-
-void tinder::addMember(int _time, string name)
+    
+void tinder::addToHash(dater* d)
     {
-    dater* newDater = new dater(_time, name);
-
-    int index = hash_func(name);
+    int index = hash_func(d->name);
 
     if(hashTable[index] == NULL)
         {
-        hashTable[index] = newDater;
-        thread(pause_thread, newDater->alert, name, newDater).detach();
+        hashTable[index] = d;
         }
     else
         {
@@ -81,8 +87,7 @@ void tinder::addMember(int _time, string name)
             {
             if(curr->next == NULL)
                 {
-                curr->next = newDater;
-                thread(pause_thread, newDater->alert, name, newDater).detach();
+                curr->next = d;
                 break;
                 }
             else
@@ -93,22 +98,14 @@ void tinder::addMember(int _time, string name)
         }
     }
 
-void tinder::activeCheck()
+dater* tinder::addMember(int _time, string name)
     {
-    dater* curr;
-    for(int i = 0; i < 10; i++)
-        {
-        curr = hashTable[i];
-        while(curr != NULL)
-            {
-            if(curr->active == false)
-                {
-                cout << "--- " << curr->name << endl;
-                }
-            curr = curr->next;
-            }
-        cout << endl;
-        }
+    dater* newDater = new dater(_time, name);
+    thread(pause_thread, newDater->alert, name, newDater).detach();
+
+    cout << newDater->name << endl;
+    return newDater;
+
     }
 
 void tinder::cancelAlert(string name)
@@ -152,6 +149,8 @@ int tinder::cs()
 dater* tinder::searchUser(string name)
     {
     int index = hash_func(name);
+    cout << "index: " << index << endl;
+    
     dater* temp = hashTable[index];
 
     while(temp != NULL)
@@ -162,4 +161,79 @@ dater* tinder::searchUser(string name)
             }
         temp = temp->next;
         }
+
+    temp = hashTable[index-1];
+    while(temp != NULL)
+        {
+        if(temp->name == name)
+            {
+            return temp;
+            }
+        temp = temp->next;
+        }
     }
+/////////VECTOR???????????????
+
+//     void pause_thread(int n, string name, vector<dater> &d, int &index)
+// /* n = how many seconds until the timer expires
+// /  name = the name of the user
+// /  &d = reference to vector of users in the class vector
+// /  index = the index of the user in the vector at the time they were inserted
+// */
+// //void pause_thread(int n, string name, int &size) 
+//     {
+//     this_thread::sleep_for (chrono::seconds(n));
+//     cout << endl;
+//     cout << name << "'s alert of " << n << " seconds has ended" << endl;
+
+//     //delete vector index for specified user
+//     int position; // users actual position in the vector since users were added or removed
+//     for(int i = 0; i < index; i++)
+//         {
+//         if(d[i].name == name)
+//             {
+//             position = i;
+//             if(d[i].safe == false)
+//                 {
+//                 cout << d[i].name << " did not check in" << endl;
+//                 }
+//             else
+//                 {
+//                 cout << d[i].name << " has checked in" << endl;
+//                 }
+            
+//             }
+//         }
+//     if(index == 1)
+//         {
+//         d.erase(d.begin());
+//         }
+//     else
+//         {
+//         d.erase(d.begin() + position);
+//         }
+    
+//     }
+
+// tinder::tinder(int size)
+//     {
+//     tableSize = size;
+//     currentSize = 0;
+//     }
+
+// tinder::~tinder()
+//     {
+    
+//     }
+
+// void tinder::addMember(int _time, string name)
+//     {
+//     //dater newDater = new dater(_time, name);
+//     dater newDater = dater(_time, name);
+
+//     daters.push_back(newDater);
+//     currentSize = daters.size();
+
+//     thread (pause_thread,newDater.alert, name, ref(daters), ref(currentSize)).detach();
+//     print();
+//     }
