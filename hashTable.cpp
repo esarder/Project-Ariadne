@@ -6,10 +6,7 @@
 
 using namespace std;
 
-//-------->>>> Constructor
-
-HashTable::HashTable(int tableSize)
-{
+HashTable::HashTable(int tableSize){
   this->tableSize = tableSize;
   this->numUsers = 0;
   this->numCollisions = 0;
@@ -19,13 +16,16 @@ HashTable::HashTable(int tableSize)
   for (int i = 0; i < tableSize; i++){
     userHashTable[i] = 0;
   }
-
 }
 
-//-------->>>> Destructor
-
-HashTable::~HashTable()
-{
+/*
+Commented out line throws and arbort 6 error at end of program. Not sure why.
+this is the error:
+run(2754,0x113b485c0) malloc: *** error for object 0x7ffee376e748: pointer being freed was not allocated
+run(2754,0x113b485c0) malloc: *** set a breakpoint in malloc_error_break to debug
+Abort trap: 6
+*/
+HashTable::~HashTable(){
   for(int i = 0; i < tableSize; i++){
     User* currentUser = userHashTable[i];
     User* tempDelete = 0;
@@ -37,12 +37,10 @@ HashTable::~HashTable()
       tempDelete = 0;
     }
   }
-
-  delete [] userHashTable;
+  // delete [] userHashTable;
   userHashTable = 0;
 }
 
-//-------->>>> isInTable()
 bool HashTable::isInTable(string _username)
 {
   User* temp = searchTable(_username);
@@ -54,8 +52,6 @@ bool HashTable::isInTable(string _username)
   }
 }
 
-//-------->>>> addUser()
-
 void HashTable::addNewUser(string _username)
 {
 
@@ -64,8 +60,6 @@ void HashTable::addNewUser(string _username)
     // How can we have this code repeat to give user another opportunity to create username
   }
   else{
-
-    // Creating user and adding personal information (should this be done in a hashtable function? feels bit odd)
     User* newUser = new User();
     newUser->setUsername(_username);
 
@@ -121,41 +115,13 @@ void HashTable::addNewUser(string _username)
   }
 }
 
-void HashTable::addPreBuiltUser(User newUser)
-{
+void HashTable::addPreBuiltUser(User newUser){
   if(isInTable(newUser.getUsername())){
-    cout << "Username taken! Please enter another username" << endl;
-    // How can we have this code repeat to give user another opportunity to create username
+    cout << "Username taken! " << newUser.getUsername() << " not added!" << endl;
+    return;
   }
   else{
-    // Creating user and adding personal information (should this be done in a hashtable function? feels bit odd)
-    // User* newUser = new User();
     User* newUser = newUser;
-    // newUser->setUsername(_username);
-    //
-    // string firstName, lastName, tempString, tempPin;
-    //
-    // cout << "User" << endl;
-    // cout << "First name: " << endl;
-    // cin >> firstName;
-    // cout << "Last name: " << endl;
-    // cin >> lastName;
-    // newUser->setUser(firstName, lastName);
-    //
-    // cout << endl << "Emergency Contact"<<endl;
-    // cout << "First name:" << endl;
-    // cin >> firstName;
-    // cout << "Last name:" << endl;
-    // cin >> lastName;
-    // newUser->setEC_name(firstName, lastName);
-    //
-    // cout << "Enter emergency contact's email address:" << endl;
-    // cin >> tempString;
-    // newUser->setEC_email(tempString);
-    //
-    // cout << "Enter a 4 digit pin for disabling emergency alerts:" << endl;
-    // cin >> tempPin;
-    // newUser->setPin(tempPin);
 
     // Adding new user to hashtable
     int index = hash_func(newUser->getUsername());
@@ -183,9 +149,7 @@ void HashTable::addPreBuiltUser(User newUser)
   return;
 }
 
-//-------->>>> deleteUser()
-void HashTable::deleteUser(string _username)
-{
+void HashTable::deleteUser(string _username){
   if(!isInTable(_username)){
     cout << "Username is not present within database" << endl;
   }
@@ -214,9 +178,7 @@ void HashTable::deleteUser(string _username)
   }
 }
 
-//-------->>>> searchTable()
-User* HashTable:: searchTable(string _username)
-{
+User* HashTable:: searchTable(string _username){
   int index = hash_func(_username);
   if (userHashTable[index] == 0){
     return 0;
@@ -233,7 +195,6 @@ User* HashTable:: searchTable(string _username)
   }
 }
 
-//-------->>>> hash_func()
 int HashTable::hash_func(string username){
   int hash = 0;
   for(int i=0; i<username.length(); i++){
@@ -244,14 +205,10 @@ int HashTable::hash_func(string username){
   return hash;
 }
 
-//-------->>>> returnCollisions()
-int HashTable:: returnCollisions()
-{
+int HashTable:: returnCollisions(){
   return numCollisions;
 }
 
-//-------->>>> returnTotalUsers()
-int HashTable:: returnTotalUsers()
-{
+int HashTable:: returnTotalUsers(){
   return numUsers;
 }
