@@ -30,7 +30,7 @@ int main()
     HashTable newDate(100);
     bool flag = false;
     string userName, firstName, lastName, ECemail, ECfn, ECln, tempPin;
-    User* temp;
+    User* temp = 0;
     // //test names
     // fstream file;
     // file.open("data.txt");
@@ -59,6 +59,10 @@ int main()
                     cout << "User" << endl;
                     getline(cin, userName);
                     temp = newDate.searchTable(userName);
+                    if(temp != 0)
+                        {
+                        cout << "Username taken! Please enter another username" << endl;
+                        }
                     }
                 cout << "First name: " << endl;
                 getline(cin, firstName);
@@ -75,8 +79,8 @@ int main()
 
 
 
-                new.searchTable
-                newDate.addToHash(addme);
+                newDate.addNewUser(userName, firstName, lastName, tempPin, ECemail, ECfn, ECln);
+                
                 break;
             case 2: //print list of users
                 newDate.print();
