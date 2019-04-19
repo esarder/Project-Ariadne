@@ -2,11 +2,12 @@
 #include <chrono>         // std::chrono::seconds
 #include "hashTable.h"
 #include "User.h"
-#include "mingw.thread.h" // std::thread, std::this_thread::sleep_for
 #include <sstream>
 #include <fstream>
 //copy/paste for windows 10 compile--
-// g++ -std=c++11 -D _WIN32_WINNT=0x0A00 -o timetest.o timetest.cpp driverTT.cpp
+//g++ -std=c++11 -D _WIN32_WINNT=0x0A00 -o ProjectAriadne.o hashTable.cpp driver.cpp User.cpp
+//copy/paste for mac compile--
+//g++ -std=c++11 -o ProjectAriadne.o hashTable.cpp driver.cpp User.cpp
 using namespace std;
 
 
@@ -17,7 +18,7 @@ void menu()
     cout << "1. ENTER NAME" << endl;
     cout << "2. PRINT" << endl;
     cout << "3. DISPLAY CURRENT SIZE" << endl;
-    cout << "4. CANCEL ALERT" << endl;
+    cout << "4. ADD EVENT" << endl;
     cout << "5. QUIT" << endl;
     cout << "-------------------------" << endl;
     }
@@ -52,10 +53,9 @@ int main()
         switch(input)
             {
             case 1: //add user function
-
-                cin.ignore();
-                while(temp != 0)
+                while(temp == 0)
                     {
+                cin.ignore();
                     cout << "User" << endl;
                     getline(cin, userName);
                     temp = newDate.searchTable(userName);
@@ -63,6 +63,12 @@ int main()
                         {
                         cout << "Username taken! Please enter another username" << endl;
                         }
+                    else
+                        {
+                        break;
+                        }
+                    temp = 0;
+                    
                     }
                 cout << "First name: " << endl;
                 getline(cin, firstName);
@@ -77,8 +83,6 @@ int main()
                 cout << "Enter a 4 digit pin for disabling emergency alerts:" << endl;
                 getline(cin, tempPin);
 
-
-
                 newDate.addNewUser(userName, firstName, lastName, tempPin, ECemail, ECfn, ECln);
                 
                 break;
@@ -86,13 +90,14 @@ int main()
                 newDate.print();
                 break;
             case 3: //print # of users
-                cout << "# of daters: " << newDate.cs() << endl;
+                cout << "# of daters: " << newDate.returnTotalUsers() << endl;
                 break;
-            case 4: //cancel alert
-                cout << "Enter name: " << endl;
+            case 4: //add event
+                cout << "Enter Username: " << endl;
                 cin.ignore();
                 getline(cin, text);
-                newDate.cancelAlert(text);
+                temp = newDate.searchTable(text);
+                temp->addEvent("hike", 10, temp);
                 break;
             case 5: //quit
                 cout << "goodbye" << endl;

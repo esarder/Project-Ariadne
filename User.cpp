@@ -5,31 +5,31 @@
 #include <vector>
 #include <queue>
 #include <chrono>         // std::chrono::seconds
-#include <thread> //FOR MAC
-// #include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
+//#include <thread> //FOR MAC
+#include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
 
 #include "User.h"
 
 using namespace std;
 
-void pause_thread(int n, string name , Event currEvent, User currUser){
+void pause_thread(int n, Event* currEvent, User* currUser){
     this_thread::sleep_for (chrono::seconds(n));
     cout << endl;
-    cout << currUser.getUserFirstName() << "'s alert of " << n;
-    cout << " seconds for " << currEvent.event << " has ended" << endl;
-    currUser.subEventCount();
-    if(currUser.getEventCount()==0){
-      currUser.setInactive();
-      currUser.setSafe();
+    cout << currUser->getUserFirstName() << "'s alert of " << n;
+    cout << " seconds for " << currEvent->event << " has ended" << endl;
+    currUser->subEventCount();
+    if(currUser->getEventCount()==0){
+      currUser->setInactive();
+      currUser->setSafe();
     }
 
-    if(currUser.getSafe() == false) //send out email
+    if(currUser->getSafe() == false) //send out email
         {
         cout << "send email" << endl;
         string compile = "a";
-        string firstName = currUser.getEC_firstName();
-        string lastName = currUser.getEC_lastName();
-        string email = currUser.getEC_email();
+        string firstName = currUser->getEC_firstName();
+        string lastName = currUser->getEC_lastName();
+        string email = currUser->getEC_email();
         string s1 = compile+" "+firstName+" "+lastName+" "+email;
 
         //NEED TO UPDATE SYSTEM STUFF
@@ -41,7 +41,7 @@ void pause_thread(int n, string name , Event currEvent, User currUser){
         }
     else
         {
-        cout << currUser.getUserFirstName() << " " << currUser.getUserLastName();
+        cout << currUser->getUserFirstName() << " " << currUser->getUserLastName();
         cout << " is safe" << endl;
         return;
         }
@@ -173,7 +173,7 @@ void User :: printEvents(){
   }
 }
 
-void User :: addEvent(string _event, int _timer){
+void User :: addEvent(string _event, int _timer, User* u){
 
   if(!(getEventCount() < 4)){
     cout << getUsername() << " has too many events currently! Event not able to";
@@ -187,10 +187,10 @@ void User :: addEvent(string _event, int _timer){
     addEvent->index = getEventCount();
     eventsArray[getEventCount()] = *addEvent;
     addEventCount();
-    setUnsafe();
+    setUnsafe(u);
     setActive();
 
-    thread(pause_thread, _timer, name, ).detach();
+    thread(pause_thread, _timer, addEvent, u).detach();
     
     }
 }
@@ -219,8 +219,8 @@ void User :: setSafe(){
   safe = true;
 }
 
-void User :: setUnsafe(){
-  safe = false;
+void User :: setUnsafe(User* u){
+  u->safe = false;
 }
 
 bool User :: getSafe(){

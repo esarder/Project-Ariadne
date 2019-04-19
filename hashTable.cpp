@@ -111,34 +111,6 @@ bool HashTable::addNewUser(string _username, string _userFirstName,
                             _EC_email, _EC_firstName, 
                             _EC_lastName);
 
-    
-    // move to driver
-    // string firstName, lastName, tempString, tempPin;
-
-    cout << "User" << endl;
-    
-    cout << "First name: " << endl;
-    cin >> firstName;
-    cout << "Last name: " << endl;
-    cin >> lastName;
-    newUser->setUser(firstName, lastName);
-
-    cout << endl << "Emergency Contact"<<endl;
-    cout << "First name:" << endl;
-    cin >> firstName;
-    cout << "Last name:" << endl;
-    cin >> lastName;
-    newUser->setEC_name(firstName, lastName);
-
-    cout << "Enter emergency contact's email address:" << endl;
-    cin >> tempString;
-    newUser->setEC_email(tempString);
-
-    cout << "Enter a 4 digit pin for disabling emergency alerts:" << endl;
-    cin >> tempPin;
-    newUser->setPin(tempPin);
-
-
     // Adding new user to hashtable
     int index = hash_func(newUser->getUsername());
     User* temp = userHashTable[index];
@@ -231,6 +203,22 @@ void HashTable::deleteUser(string _username) //uneeded and may cause errors need
   }
 }
 
+void HashTable::print(){ //done
+  cout << "Current Daters" << endl;
+
+    User* curr;
+    for(int i = 0; i < tableSize; i++)
+        {
+        curr = userHashTable[i];
+        while(curr != NULL)
+            {
+            cout << "--- " << curr->getUsername() << " ---> ";
+            curr = curr->next;
+            }
+        cout << endl;
+        }
+}
+
 User* HashTable:: searchTable(string _username) //done untested
 { 
   int index = hash_func(_username);
@@ -245,7 +233,7 @@ User* HashTable:: searchTable(string _username) //done untested
     }
   }
 
-  User* curr = userHashTable[index-1];
+  curr = userHashTable[index-1];
   if(curr != 0){
     while(curr!=0){
       if(curr->getUsername() == _username){
