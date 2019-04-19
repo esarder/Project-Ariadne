@@ -189,6 +189,9 @@ void User :: addEvent(string _event, int _timer){
     addEventCount();
     setUnsafe();
     setActive();
+
+    thread(pause_thread, _timer, name, ).detach();
+    
     }
 }
 

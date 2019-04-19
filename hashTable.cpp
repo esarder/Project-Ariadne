@@ -2,21 +2,56 @@
 #include <string>
 #include <cmath>
 #include <chrono>         // std::chrono::seconds
-#include <thread> //FOR MAC
-// #include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
+//#include <thread> //FOR MAC
+#include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
 
 #include "hashTable.h"
 #include "User.h"
 
 using namespace std;
 
-HashTable::HashTable(int tableSize){
+void pause_thread(int n, string name , Event currEvent, User currUser){
+    this_thread::sleep_for (chrono::seconds(n));
+    cout << endl;
+    cout << currUser.getUserFirstName() << "'s alert of " << n;
+    cout << " seconds for " << currEvent.event << " has ended" << endl;
+    currUser.subEventCount();
+    if(currUser.getEventCount()==0){
+      currUser.setInactive();
+      currUser.setSafe();
+    }
+
+    if(currUser.getSafe() == false) //send out email
+        {
+        cout << "send email" << endl;
+        string compile = "a";
+        string firstName = currUser.getEC_firstName();
+        string lastName = currUser.getEC_lastName();
+        string email = currUser.getEC_email();
+        string s1 = compile+" "+firstName+" "+lastName+" "+email;
+
+        //NEED TO UPDATE SYSTEM STUFF
+
+        // system("g++ email2nd.cpp"); //finds and compiles file
+        // system(s1.c_str());//runs file with string variables
+
+        return;
+        }
+    else
+        {
+        cout << currUser.getUserFirstName() << " " << currUser.getUserLastName();
+        cout << " is safe" << endl;
+        return;
+        }
+}
+HashTable::HashTable(int tableSize) //done (delete numCollisions)
+{
   this->tableSize = tableSize;
   this->numUsers = 0;
-  this->numCollisions = 0;
+  this->numCollisions = 0; 
 
+  //initialize hash table and all indecies to 0/NULL
   userHashTable = new User*[tableSize];
-
   for (int i = 0; i < tableSize; i++){
     userHashTable[i] = 0;
   }
@@ -29,7 +64,8 @@ run(2754,0x113b485c0) malloc: *** error for object 0x7ffee376e748: pointer being
 run(2754,0x113b485c0) malloc: *** set a breakpoint in malloc_error_break to debug
 Abort trap: 6
 */
-HashTable::~HashTable(){
+HashTable::~HashTable()
+{
   // for(int i = 0; i < tableSize; i++){
   //   User* currentUser = userHashTable[i];
   //   User* tempDelete = 0;
@@ -45,7 +81,7 @@ HashTable::~HashTable(){
   // userHashTable = 0;
 }
 
-bool HashTable::isInTable(string _username)
+bool HashTable::isInTable(string _username) //done untested
 {
   User* temp = searchTable(_username);
   if(temp == 0){
@@ -56,20 +92,31 @@ bool HashTable::isInTable(string _username)
   }
 }
 
-void HashTable::addNewUser(string _username)
+bool HashTable::addNewUser(string _username, string _userFirstName, 
+                            string _userLastName, string _pin,
+                            string _EC_email, string _EC_firstName, 
+                            string _EC_lastName)
 {
 
   if(isInTable(_username)){
     cout << "Username taken! Please enter another username" << endl;
     // How can we have this code repeat to give user another opportunity to create username
+    //^^^^^ in driver run a while(temp == 0)
+    return false;
   }
-  else{
-    User* newUser = new User();
-    newUser->setUsername(_username);
 
-    string firstName, lastName, tempString, tempPin;
+  else{
+    User* newUser = new User(_username, _userFirstName, 
+                            _userLastName, _pin,
+                            _EC_email, _EC_firstName, 
+                            _EC_lastName);
+
+    
+    // move to driver
+    // string firstName, lastName, tempString, tempPin;
 
     cout << "User" << endl;
+    
     cout << "First name: " << endl;
     cin >> firstName;
     cout << "Last name: " << endl;
@@ -116,6 +163,7 @@ void HashTable::addNewUser(string _username)
       }
     }
     numUsers++;
+    return true;
   }
 }
 
@@ -153,7 +201,8 @@ void HashTable::addPreBuiltUser(User newUser){
   return;
 }
 
-void HashTable::deleteUser(string _username){
+void HashTable::deleteUser(string _username) //uneeded and may cause errors need testing
+{
   if(!isInTable(_username)){
     cout << "Username is not present within database" << endl;
   }
@@ -182,21 +231,31 @@ void HashTable::deleteUser(string _username){
   }
 }
 
-User* HashTable:: searchTable(string _username){
+User* HashTable:: searchTable(string _username) //done untested
+{ 
   int index = hash_func(_username);
-  if (userHashTable[index] == 0){
-    return 0;
-  }
-  else{
-    User* curr = userHashTable[index];
+  
+  User* curr = userHashTable[index];
+  if(curr != 0){
     while(curr!=0){
       if(curr->getUsername() == _username){
-        break;
+        return curr;
       }
       curr=curr->next;
     }
-    return curr;
   }
+
+  User* curr = userHashTable[index-1];
+  if(curr != 0){
+    while(curr!=0){
+      if(curr->getUsername() == _username){
+        return curr;
+      }
+      curr=curr->next;
+    }
+  }
+
+  return 0;
 }
 
 int HashTable::hash_func(string username){
@@ -209,10 +268,12 @@ int HashTable::hash_func(string username){
   return hash;
 }
 
-int HashTable:: returnCollisions(){
+int HashTable:: returnCollisions() //done uneeded
+{
   return numCollisions;
 }
 
-int HashTable:: returnTotalUsers(){
+int HashTable:: returnTotalUsers() //done untested
+{
   return numUsers;
 }

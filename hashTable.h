@@ -15,7 +15,10 @@ public:
 
   // Overload add user to start with multiple kinds of data? Do we only want to call it after we have all the user's information, or
   // let them add it later on?
-  void addNewUser(string _username);
+  bool addNewUser(string _username, string _userFirstName, 
+                   string _userLastName, string _pin,
+                   string _EC_email, string _EC_firstName, 
+                   string EC_lastName);
 
   void addPreBuiltUser(User newUser);
 
@@ -29,9 +32,9 @@ public:
   // Returns total number of users in hashtable
   int returnTotalUsers();
 
+  User* searchTable(string _username);
 private:
   int hash_func(string username);
-  User* searchTable(string _username);
 
   User** userHashTable;
 
