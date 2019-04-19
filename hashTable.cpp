@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <chrono>         // std::chrono::seconds
+#include <thread> //FOR MAC
+// #include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
+
 #include "hashTable.h"
 #include "User.h"
 
@@ -19,26 +23,26 @@ HashTable::HashTable(int tableSize){
 }
 
 /*
-Commented out line throws and arbort 6 error at end of program. Not sure why.
+throws and arbort 6 error at end of program. Not sure why.
 this is the error:
 run(2754,0x113b485c0) malloc: *** error for object 0x7ffee376e748: pointer being freed was not allocated
 run(2754,0x113b485c0) malloc: *** set a breakpoint in malloc_error_break to debug
 Abort trap: 6
 */
 HashTable::~HashTable(){
-  for(int i = 0; i < tableSize; i++){
-    User* currentUser = userHashTable[i];
-    User* tempDelete = 0;
-
-    while(currentUser!=0){
-      tempDelete = currentUser;
-      currentUser = currentUser->next;
-      delete tempDelete;
-      tempDelete = 0;
-    }
-  }
+  // for(int i = 0; i < tableSize; i++){
+  //   User* currentUser = userHashTable[i];
+  //   User* tempDelete = 0;
+  //
+  //   while(currentUser!=0){
+  //     tempDelete = currentUser;
+  //     currentUser = currentUser->next;
+  //     delete tempDelete;
+  //     tempDelete = 0;
+  //   }
+  // }
   // delete [] userHashTable;
-  userHashTable = 0;
+  // userHashTable = 0;
 }
 
 bool HashTable::isInTable(string _username)
