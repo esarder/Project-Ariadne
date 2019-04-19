@@ -16,6 +16,9 @@ User :: User()
   pin = initPin;
   EC_firstName = EC_lastName = EC_email = proxy;
   eventCount = 0;
+  this->eventCount = 0;
+  this->safe = true;
+  this->active = false;
 
   eventsArray = new Event[3];
   for(int i = 0; i < 3; i++){
@@ -37,7 +40,8 @@ User :: User(string username, string userFirstName, string userLastName,
   this->EC_lastName = EC_lastName;
   this->eventCount = 0;
   this->safe = true;
-  this->
+  this->active = false;
+
   eventsArray = new Event[3];
   for(int i = 0; i < 3; i++){
     eventsArray[i].event = "proxy";
@@ -48,7 +52,7 @@ User :: User(string username, string userFirstName, string userLastName,
 
 User :: ~User()
 {
-  delete [] eventsArray;
+  // delete [] eventsArray;
 }
 
 string User :: getUsername()
