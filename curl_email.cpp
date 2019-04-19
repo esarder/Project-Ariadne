@@ -1,3 +1,4 @@
+//TEST ADD COMMENT VIA GIT COMMIT//
 /*
 to compile on my computer:
 compile: g++ curl_email.cpp -lcurl -o ./test
