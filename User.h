@@ -11,10 +11,7 @@ struct Event
   string event;
   int timer;
   int index;
-  bool safe;
-  bool active;
 };
-
 
 class User
 {
@@ -28,6 +25,9 @@ class User
     string EC_email;
     int eventCount;
     Event* eventsArray;
+    //from timer
+    bool safe;
+    bool active;
 
   public:
     User();
