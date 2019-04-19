@@ -128,7 +128,34 @@ void HashTable::addPreBuiltUser(User newUser)
     // How can we have this code repeat to give user another opportunity to create username
   }
   else{
+    // Creating user and adding personal information (should this be done in a hashtable function? feels bit odd)
+    // User* newUser = new User();
     User* newUser = newUser;
+    // newUser->setUsername(_username);
+    //
+    // string firstName, lastName, tempString, tempPin;
+    //
+    // cout << "User" << endl;
+    // cout << "First name: " << endl;
+    // cin >> firstName;
+    // cout << "Last name: " << endl;
+    // cin >> lastName;
+    // newUser->setUser(firstName, lastName);
+    //
+    // cout << endl << "Emergency Contact"<<endl;
+    // cout << "First name:" << endl;
+    // cin >> firstName;
+    // cout << "Last name:" << endl;
+    // cin >> lastName;
+    // newUser->setEC_name(firstName, lastName);
+    //
+    // cout << "Enter emergency contact's email address:" << endl;
+    // cin >> tempString;
+    // newUser->setEC_email(tempString);
+    //
+    // cout << "Enter a 4 digit pin for disabling emergency alerts:" << endl;
+    // cin >> tempPin;
+    // newUser->setPin(tempPin);
 
     // Adding new user to hashtable
     int index = hash_func(newUser->getUsername());
@@ -205,7 +232,6 @@ User* HashTable:: searchTable(string _username)
     return curr;
   }
 }
-
 
 //-------->>>> hash_func()
 int HashTable::hash_func(string username){
