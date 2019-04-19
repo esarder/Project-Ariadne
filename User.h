@@ -1,8 +1,11 @@
+#include <chrono>         // std::chrono::seconds
+#include <thread> //FOR MAC
+// #include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
+#include <iostream>
+
 #pragma once
 #ifndef USER_H
 #define USER_H
-
-#include <iostream>
 
 using namespace std;
 
@@ -43,6 +46,13 @@ class User
     string getEC_email();
     bool addEventCount();
     bool subEventCount();
+    int getEventCount();
+    void setSafe();
+    void setUnsafe();
+    bool getSafe();
+    void setActive();
+    void setInactive();
+    bool getActiveStatus();
 
     void setUsername(string username);
     void setUser(string firstName, string lastName);
@@ -52,7 +62,7 @@ class User
 
     bool deactivateAlert(string pin);
     void printEvents();
-    void addEvent(string event, string pin);
+    void addEvent(string event,int timer);
 
     User* next;
 };
