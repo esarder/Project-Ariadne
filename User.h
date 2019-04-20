@@ -48,7 +48,7 @@ class User
     bool subEventCount();
     int getEventCount();
     void setSafe();
-    void setUnsafe();
+    void setUnsafe(User* u);
     bool getSafe();
     void setActive();
     void setInactive();
@@ -62,7 +62,7 @@ class User
 
     bool deactivateAlert(string pin);
     void printEvents();
-    void addEvent(string event,int timer);
+    void addEvent(string event,int timer, User* u);
 
     User* next;
 };

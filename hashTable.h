@@ -32,6 +32,8 @@ public:
   // Returns total number of users in hashtable
   int returnTotalUsers();
 
+  void print();
+
   User* searchTable(string _username);
 private:
   int hash_func(string username);
