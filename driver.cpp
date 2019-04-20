@@ -46,6 +46,38 @@ int main()
     //     p = p+2;
     //     }
     ////////////////////////////////
+    string filename = "userData.txt";
+      ifstream myfile;
+
+      myfile.open(filename);
+        if (myfile.is_open()){
+          //temp string to hold incoming data
+          string line;
+          //parse file line by line
+          while(getline(myfile, line)){
+            stringstream linestream(line);
+            string user_name, uFN, uLN, uPIN, ECemail,ECfn,ECln;
+            getline(linestream, user_name, ',');
+            getline(linestream, uFN, ',');
+            getline(linestream, uLN, ',');
+            getline(linestream, uPIN, ',');
+            getline(linestream, ECemail, ',');
+            getline(linestream, ECfn, ',');
+            getline(linestream, ECln);
+            // cout << "username : " << user_name << endl << "First Name : " << uFN;
+            // cout << endl << "Last Name : " << uLN << endl << "PIN : " << uPIN;
+            // cout << endl << "Email : " << ECemail << endl << "EC First : " << ECfn;
+            // cout << endl << "EC Last : " << ECln << endl;
+            newDate.addNewUser(user_name, uFN, uLN, uPIN, ECemail, ECfn, ECln);
+          }
+        }
+        else{
+          cout << "Failed to open the file." << endl;
+          }
+      myfile.close();
+
+
+
 
     while(true)
         {
