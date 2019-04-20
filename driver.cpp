@@ -2,7 +2,8 @@
 #include <chrono>         // std::chrono::seconds
 #include "hashTable.h"
 #include "User.h"
-#include "mingw.thread.h" // std::thread, std::this_thread::sleep_for
+// #include "mingw.thread.h" // std::thread, std::this_thread::sleep_for
+#include <thread>
 #include <sstream>
 #include <fstream>
 //copy/paste for windows 10 compile--
@@ -25,7 +26,7 @@ void menu()
 int main()
     {
     int input;
-    int number; 
+    int number;
     string text;
     HashTable newDate(100);
     bool flag = false;
@@ -44,7 +45,7 @@ int main()
     //     }
     ////////////////////////////////
 
-    while(true)   
+    while(true)
         {
         menu();
         cin >> input;
