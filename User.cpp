@@ -33,7 +33,7 @@ void pause_thread(int n, Event* currEvent, User* currUser){
         string s1 = compile+" "+firstName+" "+lastName+" "+email;
 
         //NEED TO UPDATE SYSTEM STUFF
-
+        //CALL writeEmail() then send email with system
         // system("g++ email2nd.cpp"); //finds and compiles file
         // system(s1.c_str());//runs file with string variables
 
