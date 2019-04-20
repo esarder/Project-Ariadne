@@ -63,7 +63,7 @@ class User
     bool deactivateAlert(string pin);
     void printEvents();
     void addEvent(string event,int timer, User* u);
-    // void addEvent(string event,int timer);
+    bool writeEmail(string, string, string, string, string);
 
     User* next;
 };
