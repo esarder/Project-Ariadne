@@ -1,4 +1,4 @@
-userrhetth,Rhett,Hanscom,1111,testProject2270@gmail.com,Harry,Potter
+rhetth,Rhett,Hanscom,1111,testProject2270@gmail.com,Harry,Potter
 ellas,Ella,Sarder,2222,testProject2270@gmail.com,Sarah,Parker
 tylerh,Tyler,Henderson,3333,testProject2270@gmail.com,Johnny,Depp
 joew,Joe,Woolfolk,4444,testProject2270@gmail.com,Chris,Pratt

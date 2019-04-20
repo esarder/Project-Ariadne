@@ -21,7 +21,8 @@ void menu()
     cout << "2. PRINT" << endl;
     cout << "3. DISPLAY CURRENT SIZE" << endl;
     cout << "4. ADD EVENT" << endl;
-    cout << "5. QUIT" << endl;
+    cout << "5. READ IN USER AND EVENT DATA" << endl;
+    cout << "6. QUIT" << endl;
     cout << "-------------------------" << endl;
     }
 
@@ -31,8 +32,8 @@ int main()
     int number;
     string text;
     HashTable newDate(100);
-    bool flag = false;
-    string userName, firstName, lastName, ECemail, ECfn, ECln, tempPin;
+    bool flag, first = false;
+    string userName, firstName, lastName, ECemail, ECfn, ECln, tempPin, response;
     User* temp = 0;
     // //test names
     // fstream file;
@@ -45,40 +46,11 @@ int main()
     //     newDate.addToHash(addme);
     //     p = p+2;
     //     }
-    ////////////////////////////////
-    string filename = "userData.txt";
-      ifstream myfile;
-
-      myfile.open(filename);
-        if (myfile.is_open()){
-          //temp string to hold incoming data
-          string line;
-          //parse file line by line
-          while(getline(myfile, line)){
-            stringstream linestream(line);
-            string user_name, uFN, uLN, uPIN, ECemail,ECfn,ECln;
-            getline(linestream, user_name, ',');
-            getline(linestream, uFN, ',');
-            getline(linestream, uLN, ',');
-            getline(linestream, uPIN, ',');
-            getline(linestream, ECemail, ',');
-            getline(linestream, ECfn, ',');
-            getline(linestream, ECln);
-            // cout << "username : " << user_name << endl << "First Name : " << uFN;
-            // cout << endl << "Last Name : " << uLN << endl << "PIN : " << uPIN;
-            // cout << endl << "Email : " << ECemail << endl << "EC First : " << ECfn;
-            // cout << endl << "EC Last : " << ECln << endl;
-            newDate.addNewUser(user_name, uFN, uLN, uPIN, ECemail, ECfn, ECln);
-          }
-        }
-        else{
-          cout << "Failed to open the file." << endl;
-          }
-      myfile.close();
+    ///////////////////////////////
 
 
-
-
+    ifstream myfile;
+    string filename;
     while(true)
         {
         menu();
@@ -89,7 +61,7 @@ int main()
             case 1: //add user function
                 while(temp == 0)
                     {
-                cin.ignore();
+                      cin.ignore();
                     cout << "User" << endl;
                     getline(cin, userName);
                     temp = newDate.searchTable(userName);
@@ -133,7 +105,68 @@ int main()
                 temp = newDate.searchTable(text);
                 temp->addEvent("hike", 10, temp);
                 break;
-            case 5: //quit
+            case 5:
+                if(first == false){
+                  filename = "userData.txt";
+                  myfile.open(filename);
+                  if (myfile.is_open()){
+                  string line;
+                  while(getline(myfile, line)){
+                    stringstream linestream(line);
+                    string user_name, uFN, uLN, uPIN, ECemail,ECfn,ECln;
+                    getline(linestream, user_name, ',');
+                    getline(linestream, uFN, ',');
+                    getline(linestream, uLN, ',');
+                    getline(linestream, uPIN, ',');
+                    getline(linestream, ECemail, ',');
+                    getline(linestream, ECfn, ',');
+                    getline(linestream, ECln);
+                    bool sucess = newDate.addNewUser(user_name, uFN, uLN, uPIN, ECemail, ECfn, ECln);
+                    if(!sucess && user_name != ""){
+                      cout << "Could not add user : " << user_name << endl;
+                    }
+                  }
+                  }
+                  else{
+                  cout << "Failed to open user file." << endl;
+                  }
+                  myfile.close();
+
+                  filename = "eventData.txt";
+                  myfile.open(filename);
+                  if (myfile.is_open()){
+                  string line;
+                  while(getline(myfile, line)){
+                    stringstream linestream(line);
+                    string user_name, event_name, time;
+                    temp = 0;
+                    bool found = false;
+                    getline(linestream, user_name, ',');
+                    getline(linestream, event_name, ',');
+                    getline(linestream, time);
+                    int int_time = stoi(time);
+                    temp = newDate.searchTable(user_name);
+                    if(!(temp==NULL)) temp->addEvent(event_name, int_time, temp);
+                    else{
+                      cout << "Could not find user : " << user_name << endl;
+                      cout << "Event name : " << event_name << endl;
+                      cout << "Time : " << time <<endl;
+                      cout << "Event not added." << endl;
+                      }
+                    }
+                  }
+                  else { cout << "Failed to open event file." << endl; }
+                  temp = 0;
+                  myfile.close();
+                  cout << "Would you like to print the new data? Yes/No\n";
+                  cin.ignore();
+                  getline(cin,response);
+                  if(response == "Yes" || response == "yes") newDate.print();
+                  first = true;
+                }
+                else cout << "Already input user and event data\n";
+                break;
+            case 6: //quit
                 cout << "goodbye" << endl;
                 return 0;
             default:
