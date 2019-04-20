@@ -44,15 +44,18 @@ class User
     string getEC_firstName();
     string getEC_lastName();
     string getEC_email();
+    bool getSafe();
+    bool getActiveStatus();
+    int getEventCount();
+    
     bool addEventCount();
     bool subEventCount();
-    int getEventCount();
+    
     void setSafe();
-    void setUnsafe(User* u);
-    bool getSafe();
+    void setUnsafe();
     void setActive();
     void setInactive();
-    bool getActiveStatus();
+    bool deactivateAlert();
 
     void setUsername(string username);
     void setUser(string firstName, string lastName);
@@ -60,7 +63,6 @@ class User
     void setEC_name(string firstName, string lastName);
     void setEC_email(string email);
 
-    bool deactivateAlert(string pin);
     void printEvents();
     void addEvent(string event,int timer, User* u);
 

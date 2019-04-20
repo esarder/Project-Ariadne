@@ -19,7 +19,8 @@ void menu()
     cout << "2. PRINT" << endl;
     cout << "3. DISPLAY CURRENT SIZE" << endl;
     cout << "4. ADD EVENT" << endl;
-    cout << "5. QUIT" << endl;
+    cout << "5. MARK SAFE" << endl;
+    cout << "6. QUIT" << endl;
     cout << "-------------------------" << endl;
     }
 
@@ -30,7 +31,9 @@ int main()
     string text;
     HashTable newDate(100);
     bool flag = false;
-    string userName, firstName, lastName, ECemail, ECfn, ECln, tempPin;
+    string userName, firstName, lastName, ECemail, ECfn, ECln, tempPin, event;
+    int timer;
+
     User* temp = 0;
     // //test names
     // fstream file;
@@ -53,11 +56,11 @@ int main()
         switch(input)
             {
             case 1: //add user function
+                temp = 0;
                 while(temp == 0)
                     {
-                cin.ignore();
                     cout << "User" << endl;
-                    getline(cin, userName);
+                    cin >> userName;
                     temp = newDate.searchTable(userName);
                     if(temp != 0)
                         {
@@ -71,17 +74,17 @@ int main()
                     
                     }
                 cout << "First name: " << endl;
-                getline(cin, firstName);
+                cin >> firstName;
                 cout << "Last name: " << endl;
-                getline(cin, lastName);
+                cin >> lastName;
                 cout << "Enter emergency contact's email address:" << endl;
-                getline(cin, ECemail);
+                cin >> ECemail;
                 cout << "Enter emergency contact's first name:" << endl;
-                getline(cin, ECfn);
+                cin >> ECfn;
                 cout << "Enter emergency contact's last name:" << endl;
-                getline(cin, ECln);
+                cin >> ECln;
                 cout << "Enter a 4 digit pin for disabling emergency alerts:" << endl;
-                getline(cin, tempPin);
+                cin >> tempPin;
 
                 newDate.addNewUser(userName, firstName, lastName, tempPin, ECemail, ECfn, ECln);
                 
@@ -93,13 +96,49 @@ int main()
                 cout << "# of daters: " << newDate.returnTotalUsers() << endl;
                 break;
             case 4: //add event
-                cout << "Enter Username: " << endl;
-                cin.ignore();
-                getline(cin, text);
-                temp = newDate.searchTable(text);
-                temp->addEvent("hike", 10, temp);
+                temp = 0;
+                while(temp == 0)
+                    {
+                    cout << "Enter Username: " << endl;
+                    cin >> text;
+                    temp = newDate.searchTable(text);
+                    if(temp != 0)
+                        {
+                        break;
+                        }
+                    else
+                        {
+                        cout << "Username not found!" << endl;
+                        }
+                    }
+
+                cout << "Enter an event name:" << endl;
+                cin >> event;
+                cout << "Enter countdown time for alert (in seconds):" << endl;
+                cin >> timer;
+
+                temp->addEvent(event, timer, temp);
                 break;
-            case 5: //quit
+            case 5: //mark safe
+                cout << "Enter Username: " << endl;
+                cin >> text;
+                temp = newDate.searchTable(text);
+
+                while(text != temp->getPin())
+                    {
+                    cout << "Enter pin: " << endl;
+                    cin >> text;
+                    if(text != temp->getPin())
+                        {
+                        cout << "incorrect pin" << endl;
+                        }
+                    else
+                        {
+                        temp->deactivateAlert();
+                        }
+                    }
+                break;
+            case 6: //quit
                 cout << "goodbye" << endl;
                 return 0;
             default:

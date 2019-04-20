@@ -12,30 +12,31 @@
 
 using namespace std;
 
-void pause_thread(int n, Event* currEvent, User* currUser){
+void pause_thread(int n, string currEvent, User* currUser){
     this_thread::sleep_for (chrono::seconds(n));
     cout << endl;
     cout << currUser->getUserFirstName() << "'s alert of " << n;
-    cout << " seconds for " << currEvent->event << " has ended" << endl;
+    cout << " seconds for " << currEvent << " has ended" << endl;
     currUser->subEventCount();
     if(currUser->getEventCount()==0){
       currUser->setInactive();
-      currUser->setSafe();
+      //currUser->setSafe();
     }
 
     if(currUser->getSafe() == false) //send out email
         {
         cout << "send email" << endl;
-        string compile = "a";
         string firstName = currUser->getEC_firstName();
         string lastName = currUser->getEC_lastName();
+        string compile = "curl --url smtps://smtp.gmail.com:465 --ssl-reqd --mail-from project.ariadne2270@gmail.com --mail-rcpt";
         string email = currUser->getEC_email();
-        string s1 = compile+" "+firstName+" "+lastName+" "+email;
-
+        string pa = "--user project.ariadne2270@gmail.com:CSCI2270S19 -T testemail.txt";
+        string s1 = compile+" "+email+" "+pa;
+        cout << s1 << endl;
         //NEED TO UPDATE SYSTEM STUFF
 
-        // system("g++ email2nd.cpp"); //finds and compiles file
-        // system(s1.c_str());//runs file with string variables
+        //string command = "curl --url smtps://smtp.gmail.com:465 --ssl-reqd --mail-from project.ariadne2270@gmail.com --mail-rcpt gabageman12345@yahoo.com --user project.ariadne2270@gmail.com:CSCI2270S19 -T testemail.txt";
+        system(s1.c_str());
 
         return;
         }
@@ -156,7 +157,8 @@ void User :: setEC_email(string email){
   EC_email = email;
 }
 
-bool User :: deactivateAlert(string pin){
+bool User :: deactivateAlert(){
+  safe = true;
   return true;
 }
 
@@ -187,10 +189,10 @@ void User :: addEvent(string _event, int _timer, User* u){
     addEvent->index = getEventCount();
     eventsArray[getEventCount()] = *addEvent;
     addEventCount();
-    setUnsafe(u);
+    setUnsafe();
     setActive();
 
-    thread(pause_thread, _timer, addEvent, u).detach();
+    thread(pause_thread, _timer, addEvent->event, u).detach();
     
     }
 }
@@ -219,8 +221,8 @@ void User :: setSafe(){
   safe = true;
 }
 
-void User :: setUnsafe(User* u){
-  u->safe = false;
+void User :: setUnsafe(){
+  safe = false;
 }
 
 bool User :: getSafe(){
