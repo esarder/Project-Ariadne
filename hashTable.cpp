@@ -2,8 +2,8 @@
 #include <string>
 #include <cmath>
 #include <chrono>         // std::chrono::seconds
-//#include <thread> //FOR MAC
-#include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
+#include <thread> //FOR MAC
+// #include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
 
 #include "hashTable.h"
 #include "User.h"
@@ -48,7 +48,7 @@ HashTable::HashTable(int tableSize) //done (delete numCollisions)
 {
   this->tableSize = tableSize;
   this->numUsers = 0;
-  this->numCollisions = 0; 
+  this->numCollisions = 0;
 
   //initialize hash table and all indecies to 0/NULL
   userHashTable = new User*[tableSize];
@@ -92,9 +92,9 @@ bool HashTable::isInTable(string _username) //done untested
   }
 }
 
-bool HashTable::addNewUser(string _username, string _userFirstName, 
+bool HashTable::addNewUser(string _username, string _userFirstName,
                             string _userLastName, string _pin,
-                            string _EC_email, string _EC_firstName, 
+                            string _EC_email, string _EC_firstName,
                             string _EC_lastName)
 {
 
@@ -106,9 +106,9 @@ bool HashTable::addNewUser(string _username, string _userFirstName,
   }
 
   else{
-    User* newUser = new User(_username, _userFirstName, 
+    User* newUser = new User(_username, _userFirstName,
                             _userLastName, _pin,
-                            _EC_email, _EC_firstName, 
+                            _EC_email, _EC_firstName,
                             _EC_lastName);
 
     // Adding new user to hashtable
@@ -220,9 +220,9 @@ void HashTable::print(){ //done
 }
 
 User* HashTable:: searchTable(string _username) //done untested
-{ 
+{
   int index = hash_func(_username);
-  
+
   User* curr = userHashTable[index];
   if(curr != 0){
     while(curr!=0){
