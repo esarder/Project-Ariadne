@@ -62,7 +62,8 @@ class User
 
     bool deactivateAlert(string pin);
     void printEvents();
-    void addEvent(string event,int timer, User* u);
+    // void addEvent(string event,int timer, User* u);
+    void addEvent(string event,int timer);
 
     User* next;
 };

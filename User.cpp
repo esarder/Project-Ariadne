@@ -173,11 +173,11 @@ void User :: printEvents(){
   }
 }
 
-void User :: addEvent(string _event, int _timer, User* u){
-
-  if(!(getEventCount() < 4)){
+// void User :: addEvent(string _event, int _timer, User* u){
+void User :: addEvent(string _event, int _timer){
+  if(!(getEventCount() < 3)){
     cout << getUsername() << " has too many events currently! Event not able to";
-    cout <<  " add event at this time.";
+    cout <<  " be added at this time.";
     return;
   }
   else{
@@ -191,7 +191,7 @@ void User :: addEvent(string _event, int _timer, User* u){
     setActive();
 
     thread(pause_thread, _timer, addEvent, u).detach();
-    
+
     }
 }
 
