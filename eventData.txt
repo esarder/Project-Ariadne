@@ -21,7 +21,7 @@ nyasiam,snowboarding,1278
 haileym,hiking,6628
 jaydonl,skiing,926
 catalinam,skiing,4522
-ethanb,hiking,2807
+anb,hiking,2807
 allysonf,snowboarding,4200
 samuelf,hiking,493
 angeld,hiking,5071
@@ -59,7 +59,7 @@ nathanel,hiking,5606
 gagel,snowboarding,3885
 rodbie,snowboarding,5549
 kennethv,hiking,1444
-callieh,snowboarding,3216
+callieh893,snowboarding,3216
 karsong,snowboarding,3885
 alexanderb,hiking,5549
 harmonys,hiking,3752
@@ -94,7 +94,7 @@ noram,hiking,5427
 cohenf,snowboarding,3773
 adama,hiking,1311
 leahobbs,hiking,1824
-jaidendiorfierce,snowboarding,3534
+diorfierce1,snowboarding,3534
 samsonr,hiking,1521
 cierram,hiking,6615
 abbycoop,snowboarding,7020
@@ -121,7 +121,7 @@ nyasiam1,drinking,78
 haileym1,drinking,222
 jaydonl1,date,645
 catalinam1,date,214
-ethanb1,date,597
+ethb1,date,597
 allysonf1,date,518
 samuelf1,date,574
 angeld1,date,223
@@ -184,7 +184,7 @@ salmar1,drinking,9999988
 zacheryr1,drinking,3434345
 amares1,drinking,5454354
 audreyh1,date,666655
-isabellamc1,drinking,3322222
+bellamc1212,drinking,3322222
 leslyb1,drinking,223344
 marleeo1,date,654367
 karlas1,date,5432345
@@ -194,7 +194,7 @@ noram1,drinking,566754
 cohenf1,date,8787678
 adama1,drinking,9898987
 leahobbs1,date,987655
-jaidendiorfierce1,drinking,986679
+diorfierce1,drinking,986679
 samsonr1,date,900000
 cierram1,date,8989000
 abbycoop1,date,700066

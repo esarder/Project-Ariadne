@@ -11,6 +11,7 @@
 #include "User.h"
 
 using namespace std;
+
 void pause_thread(int n, string currEvent, User* currUser){
     this_thread::sleep_for (chrono::seconds(n));
     cout << endl;
