@@ -2,49 +2,13 @@
 #include <string>
 #include <cmath>
 #include <chrono>         // std::chrono::seconds
-#include <thread> //FOR MAC
+// #include <thread> //FOR MAC
 // #include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
 
 #include "hashTable.h"
 #include "User.h"
 
 using namespace std;
-
-// void pause_thread(int n, string name , Event currEvent, User currUser){
-//     this_thread::sleep_for (chrono::seconds(n));
-//     cout << endl;
-//     cout << currUser.getUserFirstName() << "'s alert of " << n;
-//     cout << " seconds for " << currEvent.event << " has ended" << endl;
-//     currUser.subEventCount();
-//     if(currUser.getEventCount()==0){
-//       currUser.setInactive();
-//       currUser.setSafe();
-//     }
-//
-//     if(currUser.getSafe() == false) //send out email
-//         {
-//         cout << "send email" << endl;
-//         string compile = "a";
-//         string firstName = currUser.getEC_firstName();
-//         string lastName = currUser.getEC_lastName();
-//         string email = currUser.getEC_email();
-//         string s1 = compile+" "+firstName+" "+lastName+" "+email;
-//
-//         //NEED TO UPDATE SYSTEM STUFF
-//
-//         // system("g++ email2nd.cpp"); //finds and compiles file
-//         // system(s1.c_str());//runs file with string variables
-//
-//         return;
-//         }
-//     else
-//         {
-//         cout << currUser.getUserFirstName() << " " << currUser.getUserLastName();
-//         cout << " is safe" << endl;
-//         cout << "HAAAAA" << endl;
-//         return;
-//         }
-// }
 
 HashTable::HashTable(int tableSize) //done (delete numCollisions)
 {
@@ -96,8 +60,6 @@ bool HashTable::addNewUser(string _username, string _userFirstName,
 
   if(isInTable(_username)){
     cout << "Username taken! Please enter another username" << endl;
-    // How can we have this code repeat to give user another opportunity to create username
-    //^^^^^ in driver run a while(temp == 0)
     return false;
   }
 

@@ -11,7 +11,6 @@
 #include "User.h"
 
 using namespace std;
-// writeEmail(string filename, string U_NAME, string EC_NAME, string EC_EMAIL, string EVENT_TITLE)
 void pause_thread(int n, string currEvent, User* currUser){
     this_thread::sleep_for (chrono::seconds(n));
     cout << endl;
@@ -35,9 +34,6 @@ void pause_thread(int n, string currEvent, User* currUser){
         string pa = "--user project.ariadne2270@gmail.com:CSCI2270S19 -T email.txt";
         string s1 = compile+" "+email+" "+pa;
         cout << s1 << endl;
-        //NEED TO UPDATE SYSTEM STUFF
-
-        //string command = "curl --url smtps://smtp.gmail.com:465 --ssl-reqd --mail-from project.ariadne2270@gmail.com --mail-rcpt gabageman12345@yahoo.com --user project.ariadne2270@gmail.com:CSCI2270S19 -T testemail.txt";
         system(s1.c_str());
 
         return;
@@ -172,7 +168,6 @@ void User :: printEvents(){
 }
 
 void User :: addEvent(string _event, int _timer, User* u){
-
   if(!(getEventCount() < 3)){
     cout << getUsername() << " has too many events currently! Event not able to";
     cout <<  " add event at this time.";
@@ -236,6 +231,7 @@ bool User :: getActiveStatus(){
   return active;
 }
 
+//customize email to user when alert times out
 bool User :: writeEmail(string filename, string U_NAME, string EC_NAME, string EC_EMAIL, string EVENT_TITLE)
 {
     ofstream myfilestream;
