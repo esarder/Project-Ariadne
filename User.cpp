@@ -17,11 +17,11 @@ void pause_thread(int n, string currEvent, User* currUser){
     cout << endl;
     cout << currUser->getUserFirstName() << "'s alert of " << n;
     cout << " seconds for " << currEvent << " has ended" << endl;
-    currUser->subEventCount();
     if(currUser->getEventCount()==0){
       currUser->setInactive();
       currUser->setSafe();
     }
+    currUser->subEventCount();
 
     if(currUser->getSafe() == false) //send out email
         {
@@ -158,7 +158,8 @@ bool User :: deactivateAlert(){
 }
 
 void User :: printEvents(){
-  if(eventCount!=0){
+  if(eventCount==0) cout << "No ongoing events!\n";
+  else{
     cout << userFirstName << " " << userLastName << "'s Events: " << endl;
     for(int i = 0; i < 3; i++){
       if(eventsArray[i].event != "EMPTY"){
@@ -172,7 +173,7 @@ void User :: printEvents(){
 
 void User :: addEvent(string _event, int _timer, User* u){
 
-  if(!(getEventCount() < 4)){
+  if(!(getEventCount() < 3)){
     cout << getUsername() << " has too many events currently! Event not able to";
     cout <<  " add event at this time.";
     return;
@@ -186,7 +187,6 @@ void User :: addEvent(string _event, int _timer, User* u){
     addEventCount();
     setUnsafe();
     setActive();
-
     thread(pause_thread, _timer, addEvent->event, u).detach();
 
     }

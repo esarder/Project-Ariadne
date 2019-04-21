@@ -19,11 +19,12 @@ void menu()
     cout << "1. ADD A USER" << endl;
     cout << "2. ADD AN EVENT" << endl;
     cout << "3. MARK SAFE / DEACTIVATE EVENT" << endl;
-    cout << "4. DELETE A USER" << endl;
-    cout << "5. PRINT" << endl;
-    cout << "6. VIEW HASH TABLE STATS" << endl;
-    cout << "7. READ IN USER AND EVENT DATA" << endl;
-    cout << "8. QUIT" << endl;
+    cout << "4. PRINT USER EVENTS" << endl;
+    cout << "5. DELETE A USER" << endl;
+    cout << "6. PRINT USER HASH TABLE" << endl;
+    cout << "7. VIEW HASH TABLE STATS" << endl;
+    cout << "8. READ IN USER AND EVENT DATA" << endl;
+    cout << "9. QUIT" << endl;
     cout << "-------------------------" << endl;
     }
 
@@ -39,30 +40,15 @@ bool setPin(string pin){
 
 int main()
     {
-    int input;
-    int number;
+    int input, number, timer;
     string text, response, response1;
     HashTable newDate(100);
     bool flag, first, works = false;
     string userName, firstName, lastName, ECemail, ECfn, ECln, tempPin, event;
-    int timer;
     ifstream myfile;
     string filename;
-
     User* temp = 0;
-    // //test names
-    // fstream file;
-    // file.open("data.txt");
-    // string str;
-    // int p = 5;
-    // while(getline(file, str))
-    //     {
-    //     addme = newDate.addMember(p, str);
-    //     newDate.addToHash(addme);
-    //     p = p+2;
-    //     }
-    ////////////////////////////////
-
+    cout << endl << endl;
     while(true)
         {
         menu();
@@ -153,6 +139,16 @@ int main()
                     }
                 break;
             case 4:
+                cout << "Enter a username: ";
+                cin.ignore();
+                cin >> userName;
+                temp = newDate.searchTable(userName);
+                if(temp == 0) cout << "User not found\n";
+                else{
+                  temp->printEvents();
+                }
+                break;
+            case 5:
                 cout << "In order to delete a user you will need their username and PIN.\n";
                 cout << "username: ";
                 cin >> text;
@@ -166,16 +162,16 @@ int main()
                 else if(temp==0) cout << "User not found\n";
                 else if(response != temp->getPin()) cout << "Invalid PIN\n";
                 break;
-            case 5: //print the hashtable
+            case 6: //print the hashtable
                 newDate.print();
                 break;
-            case 6: //size of the hash table
+            case 7: //size of the hash table
                 cout << "Number of users: " << newDate.returnTotalUsers() << endl;
                 cout << "Number of events: " << newDate.returnTotalEvents() << endl;
                 cout << "Number of collisions: " << newDate.returnCollisions() << endl;
                 cout << "Hashtable size: " << newDate.returnTableSize() << endl;
                 break;
-            case 7:
+            case 8:
                 if(first == false){
                   filename = "userData.txt";
                   myfile.open(filename);
@@ -236,7 +232,7 @@ int main()
                 }
                 else cout << "Already input user and event data\n";
                 break;
-            case 8: //quit
+            case 9: //quit
                 cout << "goodbye" << endl;
                 return 0;
             default:
