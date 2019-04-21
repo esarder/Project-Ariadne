@@ -1,15 +1,25 @@
 
-#include <iostream>       // std::cout
-#include <chrono>         // std::chrono::seconds
+#include <iostream>
+#include <chrono>
 #include "hashTable.h"
 #include "User.h"
 #include <sstream>
 #include <fstream>
+using namespace std;
+
+
 //copy/paste for windows 10 compile--
 //g++ -std=c++11 -D _WIN32_WINNT=0x0A00 -o ProjectAriadne.o hashTable.cpp driver.cpp User.cpp
 //copy/paste for mac compile--
 //g++ -std=c++11 -o ProjectAriadne.o hashTable.cpp driver.cpp User.cpp
-using namespace std;
+
+//USERNAME AND PASSWORD FOR EMAIL ALERTS ARE SENT FROM
+// project.ariadne2270@gmail.com
+// CSCI2270S19
+
+//USERNAME AND PASSWORD FOR EMAIL TEST ALERTS ARE SENT TO
+//testProject2270@gmail.com
+// GenericPassword12
 
 
 void menu()
