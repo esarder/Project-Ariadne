@@ -11,7 +11,7 @@
 #include "User.h"
 
 using namespace std;
-
+// writeEmail(string filename, string U_NAME, string EC_NAME, string EC_EMAIL, string EVENT_TITLE)
 void pause_thread(int n, string currEvent, User* currUser){
     this_thread::sleep_for (chrono::seconds(n));
     cout << endl;
@@ -20,7 +20,7 @@ void pause_thread(int n, string currEvent, User* currUser){
     currUser->subEventCount();
     if(currUser->getEventCount()==0){
       currUser->setInactive();
-      //currUser->setSafe();
+      currUser->setSafe();
     }
 
     if(currUser->getSafe() == false) //send out email
@@ -88,15 +88,8 @@ User :: User(string username, string userFirstName, string userLastName,
   }
 }
 
-/*
-Commented out line throws and arbort 6 error at end of program. Not sure why.
-this is the error:
-run(2754,0x113b485c0) malloc: *** error for object 0x7ffee376e748: pointer being freed was not allocated
-run(2754,0x113b485c0) malloc: *** set a breakpoint in malloc_error_break to debug
-Abort trap: 6
-*/
 User :: ~User(){
-  // delete [] eventsArray;
+  delete [] eventsArray;
 }
 
 string User :: getUsername(){
