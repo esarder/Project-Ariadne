@@ -104,7 +104,8 @@ int main()
                   cin >> tempPin;
                   works = setPin(tempPin);
                 }
-                if(!(userTable.addNewUser(userName, firstName, lastName, tempPin, ECemail, ECfn, ECln))){
+                if(!(userTable.addNewUser(userName, firstName, lastName,
+                          tempPin, ECemail, ECfn, ECln))){
                   cout << "User could not be created!\n";
                 }
                 break;
@@ -200,7 +201,8 @@ int main()
                     getline(linestream, ECemail, ',');
                     getline(linestream, ECfn, ',');
                     getline(linestream, ECln);
-                    bool sucess = userTable.addNewUser(user_name, uFN, uLN, uPIN, ECemail, ECfn, ECln);
+                    bool sucess = userTable.addNewUser(user_name, uFN, uLN, uPIN,
+                            ECemail, ECfn, ECln);
                     if(!sucess && user_name != ""){
                       cout << "Could not add user : " << user_name << endl;
                     }

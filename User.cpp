@@ -232,7 +232,8 @@ bool User :: getActiveStatus(){
 }
 
 //customize email to user when alert times out
-bool User :: writeEmail(string filename, string U_NAME, string EC_NAME, string EC_EMAIL, string EVENT_TITLE)
+bool User :: writeEmail(string filename, string U_NAME, string EC_NAME,
+          string EC_EMAIL, string EVENT_TITLE)
 {
     ofstream myfilestream;
     myfilestream.open(filename);
@@ -243,8 +244,10 @@ bool User :: writeEmail(string filename, string U_NAME, string EC_NAME, string E
         myfilestream << "To: '" << EC_NAME << "' <" << EC_EMAIL << ">" << endl;
         myfilestream << "Subject: This is an Emergency Alert Concerning ";
         myfilestream << U_NAME << "!" << endl;
-        myfilestream << endl;
-        myfilestream << "Hello, " << EC_NAME << endl;
+        myfilestream << endl << endl;
+        myfilestream << "THIS EMAIL IS A EXAMPLE ALERT AND DOES NOT INDICATE";
+        myfilestream << " AN ACTUAL EMERGENCY!";
+        myfilestream << endl << "Hello, " << EC_NAME << endl;
         myfilestream << endl;
         myfilestream << "You were selected by " << U_NAME;
         myfilestream << " as an emergency contact for their Project Ariadne" << endl;
@@ -261,7 +264,10 @@ bool User :: writeEmail(string filename, string U_NAME, string EC_NAME, string E
         myfilestream << " police department by dialing" << endl;
         myfilestream << "911." << endl;
         myfilestream << endl;
-        myfilestream << " - Project Ariadne" << endl;
+        myfilestream << " - Project Ariadne" << endl << endl;
+        myfilestream << "THIS EMAIL IS A EXAMPLE ALERT AND DOES NOT INDICATE";
+        myfilestream << " AN ACTUAL EMERGENCY!";
+        myfilestream << endl;
         return true;
     }
     else
