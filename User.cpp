@@ -26,11 +26,13 @@ void pause_thread(int n, string currEvent, User* currUser){
     if(currUser->getSafe() == false) //send out email
         {
         cout << "send email" << endl;
+        currUser->writeEmail("email.txt",currUser->getUserFirstName(), currUser->getEC_firstName(),
+          currUser->getEC_email(), currUser->getEventName());
         string firstName = currUser->getEC_firstName();
         string lastName = currUser->getEC_lastName();
         string compile = "curl --url smtps://smtp.gmail.com:465 --ssl-reqd --mail-from project.ariadne2270@gmail.com --mail-rcpt";
         string email = currUser->getEC_email();
-        string pa = "--user project.ariadne2270@gmail.com:CSCI2270S19 -T testemail.txt";
+        string pa = "--user project.ariadne2270@gmail.com:CSCI2270S19 -T email.txt";
         string s1 = compile+" "+email+" "+pa;
         cout << s1 << endl;
         //NEED TO UPDATE SYSTEM STUFF
@@ -270,4 +272,8 @@ bool User :: writeEmail(string filename, string U_NAME, string EC_NAME, string E
     {
     return false;
     }
+}
+
+string User :: getEventName(){
+  return eventsArray[getEventCount()].event;
 }

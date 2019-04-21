@@ -47,6 +47,7 @@ class User
     bool getSafe();
     bool getActiveStatus();
     int getEventCount();
+    string getEventName();
 
     bool addEventCount();
     bool subEventCount();
