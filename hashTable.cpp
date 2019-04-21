@@ -249,6 +249,7 @@ User* HashTable::searchTable(string _username) //done untested
       }
       curr=curr->next;
     }
+    return 0;
   }
 
   curr = userHashTable[index-1];

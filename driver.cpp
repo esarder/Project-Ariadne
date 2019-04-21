@@ -18,22 +18,32 @@ void menu()
     cout << "ENTER SELECTION" << endl;
     cout << "1. ADD A USER" << endl;
     cout << "2. ADD AN EVENT" << endl;
-    cout << "3. MARK SAFE" << endl;
-    // cout << "4. DELETE A USER" << endl;
-    cout << "4. PRINT" << endl;
-    cout << "5. VIEW HASH TABLE STATS" << endl;
-    cout << "6. READ IN USER AND EVENT DATA" << endl;
-    cout << "7. QUIT" << endl;
+    cout << "3. MARK SAFE / DEACTIVATE EVENT" << endl;
+    cout << "4. DELETE A USER" << endl;
+    cout << "5. PRINT" << endl;
+    cout << "6. VIEW HASH TABLE STATS" << endl;
+    cout << "7. READ IN USER AND EVENT DATA" << endl;
+    cout << "8. QUIT" << endl;
     cout << "-------------------------" << endl;
     }
+
+bool setPin(string pin){
+    if(pin.length()!=4){
+        return false;
+      }
+    for(int i=0; i<4; i++){
+        if(!(pin[i] >= 48 && pin[i] <= 57)) return false;
+      }
+    return true;
+  }
 
 int main()
     {
     int input;
     int number;
-    string text, response;
+    string text, response, response1;
     HashTable newDate(100);
-    bool flag, first = false;
+    bool flag, first, works = false;
     string userName, firstName, lastName, ECemail, ECfn, ECln, tempPin, event;
     int timer;
     ifstream myfile;
@@ -64,7 +74,7 @@ int main()
                 temp = 0;
                 while(temp == 0)
                     {
-                    cout << "User" << endl;
+                    cout << "Enter a username: ";
                     cin >> userName;
                     temp = newDate.searchTable(userName);
                     if(temp != 0)
@@ -76,7 +86,6 @@ int main()
                         break;
                         }
                     temp = 0;
-
                     }
                 cout << "First name: " << endl;
                 cin >> firstName;
@@ -90,9 +99,15 @@ int main()
                 cin >> ECln;
                 cout << "Enter a 4 digit pin for disabling emergency alerts:" << endl;
                 cin >> tempPin;
-
-                newDate.addNewUser(userName, firstName, lastName, tempPin, ECemail, ECfn, ECln);
-
+                works = setPin(tempPin);
+                while(!works){
+                  cout << "PIN must be four digits.\nEnter PIN: ";
+                  cin >> tempPin;
+                  works = setPin(tempPin);
+                }
+                if(!(newDate.addNewUser(userName, firstName, lastName, tempPin, ECemail, ECfn, ECln))){
+                  cout << "User could not be created!\n";
+                }
                 break;
             case 2: //add a timed event
               temp = 0;
@@ -119,34 +134,48 @@ int main()
               temp->addEvent(event, timer, temp);
               break;
             case 3: //deactivate an alert
-              cout << "Enter Username: " << endl;
-              cin >> text;
-              temp = newDate.searchTable(text);
+                cout << "Enter Username: " << endl;
+                cin >> text;
+                temp = newDate.searchTable(text);
 
-              while(text != temp->getPin())
-                  {
-                  cout << "Enter pin: " << endl;
-                  cin >> text;
-                  if(text != temp->getPin())
-                      {
-                      cout << "incorrect pin" << endl;
-                      }
-                  else
-                      {
-                      temp->deactivateAlert();
-                      }
-                  }
-              break;
-            case 4: //print the hashtable
+                while(text != temp->getPin())
+                    {
+                    cout << "Enter pin: " << endl;
+                    cin >> text;
+                    if(text != temp->getPin())
+                        {
+                        cout << "incorrect pin" << endl;
+                        }
+                    else
+                        {
+                        temp->deactivateAlert();
+                        }
+                    }
+                break;
+            case 4:
+                cout << "In order to delete a user you will need their username and PIN.\n";
+                cout << "username: ";
+                cin >> text;
+                cout << "PIN: ";
+                cin >> response;
+                temp = newDate.searchTable(text);
+                if(response == temp->getPin() && temp != 0){
+                  newDate.deleteUser(text);
+                  cout << text << " sucessfully deleted\n";
+                }
+                else if(temp==0) cout << "User not found\n";
+                else if(response != temp->getPin()) cout << "Invalid PIN\n";
+                break;
+            case 5: //print the hashtable
                 newDate.print();
                 break;
-            case 5: //size of the hash table
+            case 6: //size of the hash table
                 cout << "Number of users: " << newDate.returnTotalUsers() << endl;
                 cout << "Number of events: " << newDate.returnTotalEvents() << endl;
                 cout << "Number of collisions: " << newDate.returnCollisions() << endl;
                 cout << "Hashtable size: " << newDate.returnTableSize() << endl;
                 break;
-            case 6:
+            case 7:
                 if(first == false){
                   filename = "userData.txt";
                   myfile.open(filename);
@@ -207,7 +236,7 @@ int main()
                 }
                 else cout << "Already input user and event data\n";
                 break;
-            case 7: //quit
+            case 8: //quit
                 cout << "goodbye" << endl;
                 return 0;
             default:
