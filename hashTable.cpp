@@ -131,8 +131,8 @@ bool HashTable::addNewUser(string _username, string _userFirstName,
       }
     }
     numUsers++;
-    cout << "user: " <<newUser->getUsername() << endl;
-    cout << "count: " << newUser->getEventCount() << endl;
+    // cout << "user: " <<newUser->getUsername() << endl;
+    // cout << "count: " << newUser->getEventCount() << endl;
     return true;
   }
 }
@@ -217,7 +217,27 @@ void HashTable::print(){ //done
         }
 }
 
-User* HashTable:: searchTable(string _username) //done untested
+int HashTable::returnTotalEvents(){ //done
+    User* curr;
+    int totalEvents = 0;
+    for(int i = 0; i < tableSize; i++)
+        {
+        curr = userHashTable[i];
+        while(curr != NULL)
+            {
+            totalEvents = totalEvents + curr->getEventCount();
+            curr = curr->next;
+            }
+        }
+    return totalEvents;
+
+}
+
+int HashTable::returnTableSize(){
+  return tableSize;
+}
+
+User* HashTable::searchTable(string _username) //done untested
 {
   int index = hash_func(_username);
 
@@ -254,12 +274,12 @@ int HashTable::hash_func(string username){
   return hash;
 }
 
-int HashTable:: returnCollisions() //done uneeded
+int HashTable::returnCollisions() //done uneeded
 {
   return numCollisions;
 }
 
-int HashTable:: returnTotalUsers() //done untested
+int HashTable::returnTotalUsers() //done untested
 {
   return numUsers;
 }

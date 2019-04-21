@@ -16,11 +16,12 @@ void menu()
     {
     cout << "-------------------------" << endl;
     cout << "ENTER SELECTION" << endl;
-    cout << "1. ENTER NAME" << endl;
-    cout << "2. PRINT" << endl;
-    cout << "3. DISPLAY CURRENT SIZE" << endl;
-    cout << "4. ADD EVENT" << endl;
-    cout << "5. MARK SAFE" << endl;
+    cout << "1. ADD A USER" << endl;
+    cout << "2. ADD AN EVENT" << endl;
+    cout << "3. MARK SAFE" << endl;
+    // cout << "4. DELETE A USER" << endl;
+    cout << "4. PRINT" << endl;
+    cout << "5. VIEW HASH TABLE STATS" << endl;
     cout << "6. READ IN USER AND EVENT DATA" << endl;
     cout << "7. QUIT" << endl;
     cout << "-------------------------" << endl;
@@ -93,54 +94,57 @@ int main()
                 newDate.addNewUser(userName, firstName, lastName, tempPin, ECemail, ECfn, ECln);
 
                 break;
-            case 2: //print list of users
+            case 2: //add a timed event
+              temp = 0;
+              while(temp == 0)
+                  {
+                  cout << "Enter Username: " << endl;
+                  cin >> text;
+                  temp = newDate.searchTable(text);
+                  if(temp != 0)
+                      {
+                      break;
+                      }
+                  else
+                      {
+                      cout << "Username not found!" << endl;
+                      }
+                  }
+
+              cout << "Enter an event name:" << endl;
+              cin >> event;
+              cout << "Enter countdown time for alert (in seconds):" << endl;
+              cin >> timer;
+
+              temp->addEvent(event, timer, temp);
+              break;
+            case 3: //deactivate an alert
+              cout << "Enter Username: " << endl;
+              cin >> text;
+              temp = newDate.searchTable(text);
+
+              while(text != temp->getPin())
+                  {
+                  cout << "Enter pin: " << endl;
+                  cin >> text;
+                  if(text != temp->getPin())
+                      {
+                      cout << "incorrect pin" << endl;
+                      }
+                  else
+                      {
+                      temp->deactivateAlert();
+                      }
+                  }
+              break;
+            case 4: //print the hashtable
                 newDate.print();
                 break;
-            case 3: //print # of users
-                cout << "# of daters: " << newDate.returnTotalUsers() << endl;
-                break;
-            case 4: //add event
-                temp = 0;
-                while(temp == 0)
-                    {
-                    cout << "Enter Username: " << endl;
-                    cin >> text;
-                    temp = newDate.searchTable(text);
-                    if(temp != 0)
-                        {
-                        break;
-                        }
-                    else
-                        {
-                        cout << "Username not found!" << endl;
-                        }
-                    }
-
-                cout << "Enter an event name:" << endl;
-                cin >> event;
-                cout << "Enter countdown time for alert (in seconds):" << endl;
-                cin >> timer;
-
-                temp->addEvent(event, timer, temp);
-                break;
-            case 5: //mark safe
-                cout << "Enter Username: " << endl;
-                cin >> text;
-                temp = newDate.searchTable(text);
-
-                while(text != temp->getPin())
-                    {
-                    cout << "Enter pin: " << endl;
-                    cin >> text;
-                    if(text != temp->getPin())
-                        {
-                        cout << "incorrect pin" << endl;
-                        }
-                    else
-                        {
-                        temp->deactivateAlert();
-                        }
-                    }
+            case 5: //size of the hash table
+                cout << "Number of users: " << newDate.returnTotalUsers() << endl;
+                cout << "Number of events: " << newDate.returnTotalEvents() << endl;
+                cout << "Number of collisions: " << newDate.returnCollisions() << endl;
+                cout << "Hashtable size: " << newDate.returnTableSize() << endl;
                 break;
             case 6:
                 if(first == false){

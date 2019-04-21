@@ -27,7 +27,8 @@ public:
   bool isInTable(string _username);
 
   int returnCollisions();
-
+  int returnTotalEvents();
+  int returnTableSize();
   // Returns total number of users in hashtable
   int returnTotalUsers();
 
