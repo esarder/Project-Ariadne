@@ -147,21 +147,23 @@ int main()
                 cout << "Enter Username: " << endl;
                 cin >> text;
                 temp = userTable.searchTable(text);
-
-                while(text != temp->getPin())
-                    {
-                    cout << "Enter pin: " << endl;
-                    cin >> text;
-                    if(text != temp->getPin())
-                        {
-                        cout << "incorrect pin" << endl;
-                        }
-                    else
-                        {
-                        temp->deactivateAlert();
-                        cout << "alert deactivated\n";
-                        }
-                    }
+                if(temp!=0){
+                  while(text != temp->getPin())
+                      {
+                      cout << "Enter pin: " << endl;
+                      cin >> text;
+                      if(text != temp->getPin())
+                          {
+                          cout << "incorrect pin" << endl;
+                          }
+                      else
+                          {
+                          temp->deactivateAlert();
+                          cout << "alert deactivated\n";
+                          }
+                      }
+                }
+                else cout << "User does not exist\n";
                 break;
             case 4: //printer user event
                 cout << "Enter a username: ";
