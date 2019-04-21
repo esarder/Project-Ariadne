@@ -28,9 +28,7 @@ class User
     string EC_email;
     int eventCount;
     Event* eventsArray;
-    //from timer
     bool safe;
-    bool active;
 
   public:
     User();
@@ -45,7 +43,6 @@ class User
     string getEC_lastName();
     string getEC_email();
     bool getSafe();
-    bool getActiveStatus();
     int getEventCount();
     string getEventName();
 
@@ -54,8 +51,6 @@ class User
 
     void setSafe();
     void setUnsafe();
-    void setActive();
-    void setInactive();
     bool deactivateAlert();
 
     void setUsername(string username);

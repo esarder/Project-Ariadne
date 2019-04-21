@@ -159,6 +159,7 @@ int main()
                     else
                         {
                         temp->deactivateAlert();
+                        cout << "alert deactivated\n";
                         }
                     }
                 break;

@@ -16,13 +16,13 @@
 
 using namespace std;
 
+//delayed function, sends alert/checks for safety once timer ends
 void pause_thread(int n, string currEvent, User* currUser){
+    //sleep thread
     this_thread::sleep_for (chrono::seconds(n));
-    cout << endl;
-    cout << currUser->getUserFirstName() << "'s alert of " << n;
+    cout << endl << currUser->getUserFirstName() << "'s alert of " << n;
     cout << " seconds for " << currEvent << " has ended" << endl;
     if(currUser->getEventCount()==0){
-      currUser->setInactive();
       currUser->setSafe();
     }
     currUser->subEventCount();
@@ -61,7 +61,6 @@ User :: User(){
   eventCount = 0;
   this->eventCount = 0;
   this->safe = true;
-  this->active = false;
 
   eventsArray = new Event[3];
   for(int i = 0; i < 3; i++){
@@ -82,7 +81,6 @@ User :: User(string username, string userFirstName, string userLastName,
   this->EC_lastName = EC_lastName;
   this->eventCount = 0;
   this->safe = true;
-  this->active = false;
 
   eventsArray = new Event[3];
   for(int i = 0; i < 3; i++){
@@ -176,7 +174,7 @@ void User :: printEvents(){
 void User :: addEvent(string _event, int _timer, User* u){
   if(!(getEventCount() < 3)){
     cout << getUsername() << " has too many events currently! Event not able to";
-    cout <<  " add event at this time.";
+    cout <<  " add event at this time.\n";
     return;
   }
   else{
@@ -187,9 +185,7 @@ void User :: addEvent(string _event, int _timer, User* u){
     eventsArray[getEventCount()] = *addEvent;
     addEventCount();
     setUnsafe();
-    setActive();
     thread(pause_thread, _timer, addEvent->event, u).detach();
-
     }
 }
 
@@ -223,18 +219,6 @@ void User :: setUnsafe(){
 
 bool User :: getSafe(){
   return safe;
-}
-
-void User :: setActive(){
-  active = true;
-}
-
-void User :: setInactive(){
-  active = false;
-}
-
-bool User :: getActiveStatus(){
-  return active;
 }
 
 //customize email to user when alert times out

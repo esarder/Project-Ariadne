@@ -164,7 +164,7 @@ void HashTable::deleteUser(string _username) //uneeded and may cause errors need
 }
 
 void HashTable::print(){ //done
-  cout << "Current Daters" << endl;
+  cout << endl << "CURRENT USER HASH TABLE" << endl;
 
     User* curr;
     for(int i = 0; i < tableSize; i++)
@@ -172,7 +172,7 @@ void HashTable::print(){ //done
         curr = userHashTable[i];
         while(curr != NULL)
             {
-            cout << "--- " << curr->getUsername() << " ---> ";
+            cout << "-- " << curr->getUsername() << " --> ";
             curr = curr->next;
             }
         cout << endl;
