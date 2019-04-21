@@ -135,6 +135,8 @@ bool HashTable::addNewUser(string _username, string _userFirstName,
       }
     }
     numUsers++;
+    cout << "user: " <<newUser->getUsername() << endl;
+    cout << "count: " << newUser->getEventCount() << endl;
     return true;
   }
 }
@@ -227,6 +229,7 @@ User* HashTable:: searchTable(string _username) //done untested
   if(curr != 0){
     while(curr!=0){
       if(curr->getUsername() == _username){
+        cout << "test" << endl;
         return curr;
       }
       curr=curr->next;
