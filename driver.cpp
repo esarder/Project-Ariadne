@@ -10,6 +10,7 @@ using namespace std;
 
 //copy/paste for windows 10 compile--
 //g++ -std=c++11 -D _WIN32_WINNT=0x0A00 -o ProjectAriadne.o hashTable.cpp driver.cpp User.cpp
+
 //copy/paste for mac compile--
 //g++ -std=c++11 -o ProjectAriadne.o hashTable.cpp driver.cpp User.cpp
 
