@@ -1,17 +1,17 @@
 From: 'Project Ariadne' <project.ariadne2270@gmail.com>
-To: 'user2' <user1@yahoo.com>
-Subject: This is an Emergency Alert Concerning user1!
+To: 'Taylor' <testProject2270@gmail.com>
+Subject: This is an Emergency Alert Concerning Tamara!
 
 
 THIS EMAIL IS A EXAMPLE ALERT AND DOES NOT INDICATE AN ACTUAL EMERGENCY!
-Hello, user2
+Hello, Taylor
 
-You were selected by user1 as an emergency contact for their Project Ariadne
-profile. For their safety, user1 set up a timer, which in the event that they
-did not declare themselves safe after hiking, would notify you.
+You were selected by Tamara as an emergency contact for their Project Ariadne
+profile. For their safety, Tamara set up a timer, which in the event that they
+did not declare themselves safe after date, would notify you.
 
-user1 has not checked in and could need assistance. Please reach out to
-user1 immediately.
+Tamara has not checked in and could need assistance. Please reach out to
+Tamara immediately.
 
 In the event of an emergency, contact your local police department by dialing
 911.
