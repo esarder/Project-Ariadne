@@ -202,7 +202,7 @@ int HashTable::returnTableSize(){
 User* HashTable::searchTable(string _username) //done untested
 {
   int index = hash_func(_username);
-
+  if(_username == "anb") cout << index << endl;
   User* curr = userHashTable[index];
   if(curr != 0){
     while(curr!=0){
