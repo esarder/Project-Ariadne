@@ -9,15 +9,13 @@
 
 using namespace std;
 
-struct Event
-{
+struct Event{
   string event;
   int timer;
   int index;
 };
 
-class User
-{
+class User{
   private:
     string username;
     string userFirstName;
@@ -60,7 +58,7 @@ class User
     void setEC_email(string email);
 
     void printEvents();
-    void addEvent(string event,int timer, User* u);
+    void addEvent(string event, int timer, User* u);
     bool writeEmail(string, string, string, string, string);
 
     User* next;
