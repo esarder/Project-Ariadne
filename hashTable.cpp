@@ -10,22 +10,20 @@
 
 using namespace std;
 
-HashTable::HashTable(int tableSize) //done (delete numCollisions)
-{
+//initialize hash table and all indecies to 0/NULL
+HashTable::HashTable(int tableSize){
   this->tableSize = tableSize;
   this->numUsers = 0;
   this->numCollisions = 0;
 
-  //initialize hash table and all indecies to 0/NULL
   userHashTable = new User*[tableSize];
   for (int i = 0; i < tableSize; i++){
     userHashTable[i] = 0;
   }
 }
 
-
-HashTable::~HashTable()
-{
+//class destructor
+HashTable::~HashTable(){
   for(int i = 0; i < tableSize; i++){
     User* currentUser = userHashTable[i];
     User* tempDelete = 0;
@@ -41,8 +39,9 @@ HashTable::~HashTable()
   userHashTable = 0;
 }
 
-bool HashTable::isInTable(string _username) //done untested
-{
+// Check if a inputted username is in the hashtable
+// Returns: bool
+bool HashTable::isInTable(string _username){
   User* temp = searchTable(_username);
   if(temp == 0){
     return false;
@@ -52,11 +51,13 @@ bool HashTable::isInTable(string _username) //done untested
   }
 }
 
+// Add a new user to the hashtable
+// Usernames can't be the same but anything else can be
+// Returns bool
 bool HashTable::addNewUser(string _username, string _userFirstName,
                             string _userLastName, string _pin,
                             string _EC_email, string _EC_firstName,
-                            string _EC_lastName)
-{
+                            string _EC_lastName){
 
   if(isInTable(_username)){
     cout << "Username taken! Please enter another username" << endl;
@@ -64,21 +65,21 @@ bool HashTable::addNewUser(string _username, string _userFirstName,
   }
 
   else{
+    // Adding new user to hashtable
     User* newUser = new User(_username, _userFirstName,
                             _userLastName, _pin,
                             _EC_email, _EC_firstName,
                             _EC_lastName);
 
-    // Adding new user to hashtable
     int index = hash_func(newUser->getUsername());
     User* temp = userHashTable[index];
 
-    if(temp == 0){               // Hashed index is empty - user is first in this index of the hashTable
+    if(temp == 0){ // Hashed index is empty - user is first in this index of the hashTable
       newUser->next = 0;
       temp = newUser;
       userHashTable[index] = temp;
     }
-    else{                      // User already exits in index of hashtable - must traverse linked list and save user at end
+    else{ // User already exits in index of hashtable - must traverse linked list and save user at end
       User* prev = userHashTable[index];
 
       while(temp!=0){
@@ -93,48 +94,12 @@ bool HashTable::addNewUser(string _username, string _userFirstName,
       }
     }
     numUsers++;
-    // cout << "user: " <<newUser->getUsername() << endl;
-    // cout << "count: " << newUser->getEventCount() << endl;
+
     return true;
   }
 }
 
-void HashTable::addPreBuiltUser(User newUser){
-  if(isInTable(newUser.getUsername())){
-    cout << "Username taken! " << newUser.getUsername() << " not added!" << endl;
-    return;
-  }
-  else{
-    User* newUser = newUser;
-
-    // Adding new user to hashtable
-    int index = hash_func(newUser->getUsername());
-    User* temp = userHashTable[index];
-    if(temp == 0){               // Hashed index is empty - user is first in this index of the hashTable
-      newUser->next = 0;
-      temp = newUser;
-      userHashTable[index] = temp;
-    }
-    else{                      // User already exits in index of hashtable - must traverse linked list and save user at end
-      User* prev = userHashTable[index];
-
-      while(temp!=0){
-        prev = temp;
-        temp = temp->next;
-      }
-      if(temp == 0){
-        prev->next = newUser;
-        newUser->next = 0;
-        numCollisions++;
-      }
-    }
-    numUsers++;
-  }
-  return;
-}
-
-void HashTable::deleteUser(string _username) //uneeded and may cause errors need testing
-{
+void HashTable::deleteUser(string _username){
   if(!isInTable(_username)){
     cout << "Username is not present within database" << endl;
   }
@@ -163,35 +128,34 @@ void HashTable::deleteUser(string _username) //uneeded and may cause errors need
   }
 }
 
-void HashTable::print(){ //done
+void HashTable::print(){
   cout << endl << "CURRENT USER HASH TABLE" << endl;
 
-    User* curr;
-    for(int i = 0; i < tableSize; i++)
-        {
-        curr = userHashTable[i];
-        while(curr != NULL)
-            {
-            cout << "-- " << curr->getUsername() << " --> ";
-            curr = curr->next;
-            }
-        cout << endl;
-        }
+  User* curr;
+  for(int i = 0; i < tableSize; i++)
+      {
+      curr = userHashTable[i];
+      cout << "[" << i << "]";
+      while(curr != NULL)
+          {
+          cout << "-- " << curr->getUsername() << " --> ";
+          curr = curr->next;
+          }
+      cout << endl;
+      }
 }
 
-int HashTable::returnTotalEvents(){ //done
-    User* curr;
-    int totalEvents = 0;
-    for(int i = 0; i < tableSize; i++)
-        {
-        curr = userHashTable[i];
-        while(curr != NULL)
-            {
-            totalEvents = totalEvents + curr->getEventCount();
-            curr = curr->next;
-            }
+int HashTable::returnTotalEvents(){
+  User* curr;
+  int totalEvents = 0;
+  for(int i = 0; i < tableSize; i++){
+      curr = userHashTable[i];
+      while(curr != NULL){
+        totalEvents = totalEvents + curr->getEventCount();
+        curr = curr->next;
         }
-    return totalEvents;
+      }
+  return totalEvents;
 
 }
 
@@ -199,8 +163,7 @@ int HashTable::returnTableSize(){
   return tableSize;
 }
 
-User* HashTable::searchTable(string _username) //done untested
-{
+User* HashTable::searchTable(string _username){
   int index = hash_func(_username);
 
   User* curr = userHashTable[index];
@@ -213,9 +176,8 @@ User* HashTable::searchTable(string _username) //done untested
     }
     return 0;
   }
-  
-  if(index==0) return 0;
-  
+
+  if(index == 0) return 0;
   curr = userHashTable[index-1];
   if(curr != 0){
     while(curr!=0){
@@ -239,12 +201,10 @@ int HashTable::hash_func(string username){
   return hash;
 }
 
-int HashTable::returnCollisions() //done uneeded
-{
+int HashTable::returnCollisions(){
   return numCollisions;
 }
 
-int HashTable::returnTotalUsers() //done untested
-{
+int HashTable::returnTotalUsers(){
   return numUsers;
 }
