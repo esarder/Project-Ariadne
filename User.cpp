@@ -5,12 +5,11 @@
 #include <vector>
 #include <queue>
 #include <chrono>         // std::chrono::seconds
-#include <thread> //FOR MAC
-// #include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
+//#include <thread> //FOR MAC
+#include "mingw.thread.h" // std::thread, std::this_thread::sleep_for //FOR PC
 
 #include <stdio.h>
 #include <stdlib.h>
-// #include <windows.h>
 
 #include "User.h"
 
@@ -27,14 +26,13 @@ void pause_thread(int n, string currEvent, User* currUser){
     }
     currUser->subEventCount();
 
-    if(currUser->getSafe() == false) //send out email
-        {
-        cout << currUser->getUserFirstName() << "has not checked in as safe.\n";
+    if(currUser->getSafe() == false){ //send out email
+        cout << currUser->getUserFirstName() << " has not checked in as safe.\n";
         cout << "Sending alert email to " << currUser->getUserFirstName();
         cout << "'s emergency contact.\n";
         // don't execute on shell
         currUser->writeEmail("email.txt",currUser->getUserFirstName(), currUser->getEC_firstName(),
-          currUser->getEC_email(), currUser->getEventName());
+                              currUser->getEC_email(), currUser->getEventName());
         string firstName = currUser->getEC_firstName();
         string lastName = currUser->getEC_lastName();
         string compile = "curl --url smtps://smtp.gmail.com:465 --ssl-reqd --mail-from project.ariadne2270@gmail.com --mail-rcpt";
@@ -44,8 +42,7 @@ void pause_thread(int n, string currEvent, User* currUser){
         system(s1.c_str());
         return;
         }
-    else
-        {
+    else{
         cout << currUser->getUserFirstName() << " " << currUser->getUserLastName();
         cout << " has checked in as safe. No alert will be sent." << endl;
         return;
@@ -71,7 +68,7 @@ User :: User(){
 }
 
 User :: User(string username, string userFirstName, string userLastName,
-  string pin, string EC_email, string EC_firstName, string EC_lastName){
+             string pin, string EC_email, string EC_firstName, string EC_lastName){
   this->username = username;
   this->userFirstName = userFirstName;
   this->userLastName = userLastName;
@@ -185,7 +182,9 @@ void User :: addEvent(string _event, int _timer, User* u){
     eventsArray[getEventCount()] = *addEvent;
     addEventCount();
     setUnsafe();
-    thread(pause_thread, _timer, addEvent->event, u).detach();
+    //cout << addEvent->timer << " timer" <<endl;
+    thread(pause_thread, addEvent->timer, addEvent->event, u).detach();
+    //cout << "test" << endl;
     }
 }
 
@@ -223,12 +222,10 @@ bool User :: getSafe(){
 
 //customize email to user when alert times out
 bool User :: writeEmail(string filename, string U_NAME, string EC_NAME,
-          string EC_EMAIL, string EVENT_TITLE)
-{
+                        string EC_EMAIL, string EVENT_TITLE){
     ofstream myfilestream;
     myfilestream.open(filename);
-    if (myfilestream.is_open())
-    {
+    if(myfilestream.is_open()){
         myfilestream << "From: '" << "Project Ariadne" << "' <project.";
         myfilestream << "ariadne2270@gmail.com>" << endl;
         myfilestream << "To: '" << EC_NAME << "' <" << EC_EMAIL << ">" << endl;
@@ -260,8 +257,7 @@ bool User :: writeEmail(string filename, string U_NAME, string EC_NAME,
         myfilestream << endl;
         return true;
     }
-    else
-    {
+    else{
     return false;
     }
 }
