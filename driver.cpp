@@ -234,7 +234,7 @@ int main(){
                   if (myfile.is_open()){
                   string line;
                   while(getline(myfile, line)){
-                    
+
                     stringstream linestream(line);
                     string user_name, event_name, _time;
                     temp = 0;
@@ -267,7 +267,7 @@ int main(){
                 }
                 else cout << "Already input user and event data\n";
                 break;
-                
+
             case 9: //quit
                 cout << "goodbye" << endl;
                 return 0;

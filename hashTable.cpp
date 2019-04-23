@@ -158,7 +158,7 @@ int HashTable::returnTotalEvents(){
   return totalEvents;
 
 }
-git
+
 int HashTable::returnTableSize(){
   return tableSize;
 }
